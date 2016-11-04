@@ -28,10 +28,10 @@ gulp.task('sass', function(){
 });
 
 gulp.task('scripts', function(){
-  gulp.src('development/img/**/*')
+  gulp.src('img')
     .pipe(changed('img'))
     .pipe(imagemin())
-    .pipe(gulp.dest('img'));
+    .pipe(gulp.dest('development/img/**/*'));
 
   gulp.src('js/*.js')
       .pipe(plumber())
