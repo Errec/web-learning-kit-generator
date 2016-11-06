@@ -1,20 +1,20 @@
-var gulp         = require('gulp'),
-    uglify       = require('gulp-uglify'),
-    browserSync  = require('browser-sync'),
-    plumber      = require('gulp-plumber'),
-    autoprefixer = require('gulp-autoprefixer'),
-    changed      = require('gulp-changed'),
-    sass         = require('gulp-sass'),
-    jade         = require('gulp-jade'),
-    imagemin     = require('gulp-imagemin');
+var gulp         = require('gulp');
+var uglify       = require('gulp-uglify');
+var browserSync  = require('browser-sync');
+var plumber      = require('gulp-plumber');
+var autoprefixer = require('gulp-autoprefixer');
+var changed      = require('gulp-changed');
+var sass         = require('gulp-sass');
+var jade         = require('gulp-jade');
+var imagemin     = require('gulp-imagemin');
 
-  var reload = browserSync.reload;
+var reload = browserSync.reload; // just to simplify method call
 
 gulp.task('templates', function(){
   gulp.src('jade/*.jade')
   .pipe(plumber())
   .pipe(jade())
-  .pipe(gulp.dest('development/'));
+  .pipe(gulp.dest('dev/'));
 });
 
 gulp.task('sass', function(){
@@ -24,41 +24,41 @@ gulp.task('sass', function(){
       indentedSyntax: true,
       includePaths: require('node-bourbon').includePaths
     }))
-  .pipe(gulp.dest('development/css'));
+  .pipe(gulp.dest('dev/css'));
 });
 
 gulp.task('scripts', function(){
-  gulp.src('img')
-    .pipe(changed('img'))
+  gulp.src('img/*')
+    .pipe(changed('img/*'))
     .pipe(imagemin())
-    .pipe(gulp.dest('development/img/**/*'));
+    .pipe(gulp.dest('dev/img/'));
 
   gulp.src('js/*.js')
       .pipe(plumber())
       .pipe(uglify())
-      .pipe(gulp.dest('development/js'));
+      .pipe(gulp.dest('dev/js'));
 
-  gulp.src('development/css/main.css')
+  gulp.src('dev/css/main.css')
     .pipe(autoprefixer({
         browsers: ['last 5 versions'],
         cascade: false
     }))
-    .pipe(gulp.dest('development/css'));
+    .pipe(gulp.dest('dev/css'));
 });
 
 gulp.task('watch', ['browserSync'], function(){
   gulp.watch('jade/*.jade', ['templates']);
   gulp.watch('sass/*.scss', ['sass']);
-  gulp.watch('development/js/*.js', reload);
-  gulp.watch('development/index.html', reload);
-  gulp.watch('development/css/*.css', reload);
+  gulp.watch('dev/js/*.js', reload);
+  gulp.watch('dev/index.html', reload);
+  gulp.watch('dev/css/*.css', reload);
 });
 
 gulp.task('browserSync', function(){
   browserSync.init({
     server: {
       proxy: "local.dev",
-      baseDir: "development/"
+      baseDir: "dev/"
     }
   });
 });
