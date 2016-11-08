@@ -3,64 +3,66 @@ var uglify       = require('gulp-uglify');
 var browserSync  = require('browser-sync');
 var plumber      = require('gulp-plumber');
 var autoprefixer = require('gulp-autoprefixer');
-var changed      = require('gulp-changed');
 var sass         = require('gulp-sass');
 var jade         = require('gulp-jade');
 var imagemin     = require('gulp-imagemin');
-
-var reload = browserSync.reload; // just to simplify method call
-
-gulp.task('templates', function(){
-  gulp.src('jade/*.jade')
-  .pipe(plumber())
-  .pipe(jade())
-  .pipe(gulp.dest('dev/'));
-});
-
-gulp.task('sass', function(){
-  gulp.src('sass/*.scss')
-  .pipe(plumber())
-  .pipe(sass({
+var del          = require('del');
+// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del --save-dev
+gulp.task('styles', function(){
+  return sass({
       indentedSyntax: true,
-      includePaths: require('node-bourbon').includePaths
-    }))
-  .pipe(gulp.dest('dev/css'));
-});
-
-gulp.task('scripts', function(){
-  gulp.src('img/*')
-    .pipe(changed('img/*'))
-    .pipe(imagemin())
-    .pipe(gulp.dest('dev/img/'));
-
-  gulp.src('js/*.js')
-      .pipe(plumber())
-      .pipe(uglify())
-      .pipe(gulp.dest('dev/js'));
-
-  gulp.src('dev/css/main.css')
+      includePaths: require('node-bourbon').includePaths})
     .pipe(autoprefixer({
-        browsers: ['last 5 versions'],
-        cascade: false
-    }))
+      browsers: ['last 3 versions'],
+      cascade: false}))
+    .pipe(plumber())
     .pipe(gulp.dest('dev/css'));
 });
 
-gulp.task('watch', ['browserSync'], function(){
-  gulp.watch('jade/*.jade', ['templates']);
-  gulp.watch('sass/*.scss', ['sass']);
-  gulp.watch('dev/js/*.js', reload);
-  gulp.watch('dev/index.html', reload);
-  gulp.watch('dev/css/*.css', reload);
+gulp.task('templates', function(){
+  return gulp.src('jade/*.jade')
+    .pipe(plumber())
+    .pipe(jade())
+    .pipe(gulp.dest('dev/'));
 });
 
-gulp.task('browserSync', function(){
+gulp.task('scripts', function(){
+  return gulp.src('js/*.js')
+    .pipe(uglify())
+    .pipe(plumber())
+    .pipe(gulp.dest('dev/js'));
+});
+
+gulp.task('images', function(){
+  return gulp.src('img/**/*')
+    .pipe(imagemin({
+      optimizationLevel: 3,
+      progressive: true,
+      interlaced: true}))
+    .pipe(gulp.dest('dev/img/'));
+});
+
+gulp.task('cleanup', function() {
+  return del(['dev/css', 'dev/js', 'dev/img']);
+});
+
+gulp.task('default', ['cleanup'], function() {
+  gulp.start('styles', 'templates', 'scripts', 'images');
+});
+
+gulp.task('watch', function(){
+  gulp.watch('jade/*.jade', ['templates']);
+  gulp.watch('sass/*.scss', ['styles']);
+  gulp.watch('js/*.js', ['scripts']);
+  gulp.watch('img/**/*', ['images']);
+
+// init server
   browserSync.init({
     server: {
       proxy: "local.dev",
       baseDir: "dev/"
     }
   });
-});
 
-gulp.task('default', ['scripts', 'watch']);
+  gulp.watch(['dev/**'], browserSync.reload);
+});
