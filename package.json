@@ -31,7 +31,6 @@
     "gulp-jade": "^1.1.0",
     "gulp-plumber": "^1.1.0",
     "gulp-sass": "^2.3.2",
-    "gulp-uglify": "^2.0.0",
-    "node-bourbon": "^4.2.8"
+    "gulp-uglify": "^2.0.0"
   }
 }

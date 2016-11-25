@@ -8,20 +8,19 @@ var jade         = require('gulp-jade');
 var imagemin     = require('gulp-imagemin');
 var del          = require('del');
 var cache        = require('gulp-cache');
-// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del --save-dev
+// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache --save-dev
 gulp.task('styles', function(){
   gulp.src('sass/*.scss')
   .pipe(plumber({
       errorHandler: function (err) {
-          console.log(err);
-          this.emit('end');
+        console.log(err);
+        this.emit('end');
       }}))
   .pipe(sass({
-    indentedSyntax: true,
-    includePaths: require('node-bourbon').includePaths
+    indentedSyntax: true
   }))
   .pipe(autoprefixer({
-    browsers: ['last 3 versions'],
+    browsers: ['last 5 versions'],
     cascade: false}))
   .pipe(gulp.dest('dev/css'));
 });
@@ -30,8 +29,8 @@ gulp.task('templates', function(){
   gulp.src('jade/*.jade')
   .pipe(plumber({
       errorHandler: function (err) {
-          console.log(err);
-          this.emit('end');
+        console.log(err);
+        this.emit('end');
       }}))
   .pipe(jade())
   .pipe(gulp.dest('dev/'));
@@ -41,8 +40,8 @@ gulp.task('scripts', function(){
   gulp.src('js/*.js')
   .pipe(plumber({
       errorHandler: function (err) {
-          console.log(err);
-          this.emit('end');
+        console.log(err);
+        this.emit('end');
       }}))
   .pipe(uglify())
   .pipe(gulp.dest('dev/js'));
@@ -66,10 +65,10 @@ gulp.task('default', ['cleanup'], function() {
 });
 
 gulp.task('watch', function(){
+  gulp.watch('sass/**/*',   ['styles']);
   gulp.watch('jade/*.jade', ['templates']);
-  gulp.watch('sass/**/*', ['styles']);
-  gulp.watch('js/*.js', ['scripts']);
-  gulp.watch('img/**/*', ['images']);
+  gulp.watch('js/*.js',     ['scripts']);
+  gulp.watch('img/**/*',    ['images']);
 
 // init server
   browserSync.init({
