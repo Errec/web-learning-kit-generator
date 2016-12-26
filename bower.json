@@ -1,18 +1,15 @@
 {
-  "name": "wikipedia-viewer",
-  "description": "Web App for article search using wikipedia API",
-  "main": "index.js",
+  "name": "",
+  "description": "",
+  "main": "",
   "authors": [
-    "ErreC"
+    ""
   ],
-  "license": "MIT",
+  "license": "",
   "keywords": [
-    "wikipedia",
-    "API",
-    "FCC",
-    "JS"
+    ""
   ],
-  "homepage": "https://github.com/Errec/WikipediaSearch",
+  "homepage": "",
   "ignore": [
     "**/.*",
     "node_modules",
