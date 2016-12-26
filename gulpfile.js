@@ -10,7 +10,7 @@ var del          = require('del');
 var cache        = require('gulp-cache');
 // sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache --save-dev
 gulp.task('styles', function(){
-  gulp.src('sass/*.scss')
+  gulp.src('styles/*.scss')
   .pipe(plumber({
       errorHandler: function (err) {
         console.log(err);
@@ -26,7 +26,7 @@ gulp.task('styles', function(){
 });
 
 gulp.task('templates', function(){
-  gulp.src('jade/*.jade')
+  gulp.src('templates/*.jade')
   .pipe(plumber({
       errorHandler: function (err) {
         console.log(err);
@@ -65,8 +65,8 @@ gulp.task('default', ['cleanup'], function() {
 });
 
 gulp.task('watch', function(){
-  gulp.watch('sass/**/*',   ['styles']);
-  gulp.watch('jade/*.jade', ['templates']);
+  gulp.watch('styles/**/*',   ['styles']);
+  gulp.watch('templates/*.jade', ['templates']);
   gulp.watch('js/*.js',     ['scripts']);
   gulp.watch('img/**/*',    ['images']);
 
