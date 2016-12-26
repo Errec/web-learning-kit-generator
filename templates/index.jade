@@ -13,6 +13,8 @@ html(class="no-js" lang="en")
   body
     div.container
 
-  script(src="/lib/jquery/dist/jquery.min.js")
+  script(src='https://code.jquery.com/jquery-{{JQUERY_VERSION}}.min.js', integrity='{{JQUERY_SRI_HASH}}', crossorigin='anonymous')
+  script.
+    window.jQuery || document.write('<script src="/lib/jquery/dist/jquery.min.js"><\\/script>')
   script(src="/lib/bootstrap/dist/js/bootstrap.min.js")
   script(src="js/main.js")
