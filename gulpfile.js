@@ -8,7 +8,9 @@ var jade         = require('gulp-jade');
 var imagemin     = require('gulp-imagemin');
 var del          = require('del');
 var cache        = require('gulp-cache');
-// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache --save-dev
+var cleanCSS     = require('gulp-clean-css');
+var sourcemaps   = require('gulp-sourcemaps');
+// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps --save-dev
 gulp.task('styles', function(){
   gulp.src('styles/*.scss')
   .pipe(plumber({
@@ -16,12 +18,13 @@ gulp.task('styles', function(){
         console.log(err);
         this.emit('end');
       }}))
-  .pipe(sass({
-    indentedSyntax: true
-  }))
+  .pipe(sourcemaps.init())
+  .pipe(sass({indentedSyntax: true}))
+  .pipe(cleanCSS())
   .pipe(autoprefixer({
     browsers: ['last 5 versions'],
     cascade: false}))
+  .pipe(sourcemaps.write())
   .pipe(gulp.dest('dev/css'));
 });
 
