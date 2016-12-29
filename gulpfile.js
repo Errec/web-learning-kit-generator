@@ -20,10 +20,10 @@ gulp.task('styles', function(){
       }}))
   .pipe(sourcemaps.init())
   .pipe(sass({indentedSyntax: true}))
-  .pipe(cleanCSS())
   .pipe(autoprefixer({
     browsers: ['last 5 versions'],
     cascade: false}))
+  .pipe(cleanCSS())
   .pipe(sourcemaps.write())
   .pipe(gulp.dest('dev/css'));
 });

@@ -1,15 +1,15 @@
 {
-  "name": "",
-  "description": "",
-  "main": "",
+  "name": "name",
+  "description": "myDescription",
+  "main": "myMain",
   "authors": [
-    ""
+    "myAuthors"
   ],
-  "license": "",
+  "license": "myLicense",
   "keywords": [
-    ""
+    "myKeywords"
   ],
-  "homepage": "",
+  "homepage": "myPage",
   "ignore": [
     "**/.*",
     "node_modules",
@@ -18,6 +18,6 @@
     "tests"
   ],
   "dependencies": {
-    "bootstrap": "~3.3.7" // jQuery included
+    "bootstrap": "~3.3.7"
   }
 }
