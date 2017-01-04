@@ -2,7 +2,7 @@
 
 Pug-Sass Boilerplate is a Front-end web kit for building web apps or sites using Pug(Jade) and Sass
 
-This boiler plate and starter kit project is based on a simple workflow for small apps and personal sites. It gives a solid starting point for newcomers who wants ready to deploy local environment setup. The sources used to build this project includes:
+This boilerplate and starter kit project is based on a simple workflow for small apps and personal sites. It gives a solid starting point for newcomers who wants a ready to deploy local environment setup. The sources used to build this project includes:
 
   * [H5BP Project](https://github.com/h5bp/html5-boilerplate)
   * [React Redux Starter Kit](https://github.com/davezuko/react-redux-starter-kit)
@@ -10,7 +10,18 @@ This boiler plate and starter kit project is based on a simple workflow for smal
   * [material design palette](https://www.materialpalette.com/)
   * [Flat UI Colors](https://flatuicolors.com/)
 
+## Features
+
+  * Pug-Sass ready.
+  * Easy to deploy your production files
+  * Includes:
+    * [`Normalize.css`](https://necolas.github.com/normalize.css/) for CSS normalizations and common bug fixes
+    * [`jQuery`](https://jquery.com/) via CDN with [SRI Hash](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) and a local fallback
+    * [`gulpfile.js`](http://gulpjs.com/) with Gulp presets
+    * `Sass variables` with with popular color palettes
+
 ## Requirements
+
 * [Node.js](https://nodejs.org)
 * [npm](https://docs.npmjs.com/getting-started/installing-node)
 
@@ -26,12 +37,3 @@ First, clone the project:
 $ git clone https://github.com/Errec/pug-sass-boilerplate-starter-kit.git <my-project-name>
 $ cd <my-project-name>
 ```
-
-## Features
-
-* Pug-Sass ready.
-* Includes:
-  * [`Normalize.css`](https://necolas.github.com/normalize.css/)
-  * [`jQuery`](https://jquery.com/) via CDN with [SRI Hash](https://developer.mozilla.org/en-US/docs/Web/Security/Subresource_Integrity) and a local fallback
-
-
