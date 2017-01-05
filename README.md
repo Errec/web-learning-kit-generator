@@ -23,11 +23,13 @@ This boilerplate and starter kit project is based on a simple workflow for small
 ## Requirements
 
 * [Node.js](https://nodejs.org)
-* [npm](https://docs.npmjs.com/getting-started/installing-node)
+* [npm](https://www.npmjs.com)
+* [Gulp](http://gulpjs.com/)
+* [Bower](https://bower.io/)
 
 ## Getting Started
 
-After Node.js and npm installation, you can create a new project based on `pug-sass-boilerplate-starter-kit` by doing the following:
+After [Node.js](https://nodejs.org/en/download/), [npm](https://docs.npmjs.com/getting-started/installing-node), [Gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md) and [Bower](https://bower.io/#install-bower) installation, you can create a new project based on `pug-sass-boilerplate-starter-kit` by doing the following:
 
 ### Install from source
 
@@ -35,5 +37,16 @@ First, clone the project:
 
 ```bash
 $ git clone https://github.com/Errec/pug-sass-boilerplate-starter-kit.git <my-project-name>
+```
+
+Initialize `npm` on `<my-project-name>` directory
+```bash
 $ cd <my-project-name>
+$ npm init
+```
+
+Then install all required `Gulp` dependencies
+
+```bash
+$ sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps --save-dev
 ```
