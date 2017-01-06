@@ -7,7 +7,7 @@ This boilerplate and starter kit project is based on a simple workflow for small
   * [H5BP Project](https://github.com/h5bp/html5-boilerplate)
   * [React Redux Starter Kit](https://github.com/davezuko/react-redux-starter-kit)
   * [Mark Goodyear's Blog](https://markgoodyear.com/2014/01/getting-started-with-gulp/)
-  * [material design palette](https://www.materialpalette.com/)
+  * [Material Design Palette](https://www.materialpalette.com/)
   * [Flat UI Colors](https://flatuicolors.com/)
 
 ## Features
@@ -40,6 +40,7 @@ $ git clone https://github.com/Errec/pug-sass-boilerplate-starter-kit.git <my-pr
 ```
 
 Initialize `npm` on `<my-project-name>` directory
+
 ```bash
 $ cd <my-project-name>
 $ npm init
@@ -49,4 +50,12 @@ Then install all required `Gulp` dependencies
 
 ```bash
 $ sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps --save-dev
+```
+
+Initialize `Bower` and install the dependencies
+
+```bash
+$ bower init
+$ bower install jquery
+$ bower install bootstrap
 ```
