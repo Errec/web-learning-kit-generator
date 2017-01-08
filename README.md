@@ -52,10 +52,29 @@ Then install all required `Gulp` dependencies
 $ sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps --save-dev
 ```
 
-Initialize `Bower` and install the dependencies
+Finally initialize `Bower` and install the dependencies
 
 ```bash
 $ bower init
-$ bower install jquery
-$ bower install bootstrap
+$ bower install jquery --save
+$ bower install bootstrap --save
+```
+
+## Project Structure
+
+The structure presented in this boilerplate is grouped primarily by file type. Please note that this structure is only meant to serve as a guide, it is by no means prescriptive.
+
+```
+.
+├── img                      #
+├── js                       #
+│   └── main.js              #
+├── styles                   #
+│   ├── modules              #
+│   ├── variables            #
+│   └── main.scss            #
+├── templates                #
+│   └── index.jade           #
+├── .bowerrc                 #
+├── gulpfile.js              #
 ```
