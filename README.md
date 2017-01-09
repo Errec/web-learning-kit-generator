@@ -62,19 +62,20 @@ $ bower install bootstrap --save
 
 ## Project Structure
 
-The structure presented in this boilerplate is grouped primarily by file type. Please note that this structure is only meant to serve as a guide, it is by no means prescriptive.
+The structure presented in this boilerplate is grouped primarily by folder content and file type. Please note that this structure is only meant to serve as a guide, it is by no means prescriptive.
 
 ```
 .
-├── img                      #
-├── js                       #
-│   └── main.js              #
-├── styles                   #
-│   ├── modules              #
-│   ├── variables            #
-│   └── main.scss            #
-├── templates                #
-│   └── index.jade           #
-├── .bowerrc                 #
-├── gulpfile.js              #
+├── img                      # Main folder for image files
+├── js                       # Main folder for JS files
+│   ├── vendor               # Store third part library files (e.g.: jquery, bootstrap)
+│   └── index.js             # Index JS code goes here
+├── styles                   # Main folder for cascade style files
+│   ├── modules              # Store third party modules and initializers (e.g.: normalize)
+│   ├── variables            # Store sass variables files
+│   └── index.scss           # Index Sass goes here
+├── templates                # Main folder for jade template files
+│   └── index.jade           # Index jade/pug markup goes here
+├── .bowerrc                 # Setup bower library destination path
+├── gulpfile.js              # Gulp task runner setup file
 ```
