@@ -25,7 +25,7 @@ gulp.task('styles', function(){
     cascade: false}))
   .pipe(cleanCSS())
   .pipe(sourcemaps.write())
-  .pipe(gulp.dest('dev/css'));
+  .pipe(gulp.dest('build/css'));
 });
 
 gulp.task('templates', function(){
@@ -36,7 +36,7 @@ gulp.task('templates', function(){
         this.emit('end');
       }}))
   .pipe(jade())
-  .pipe(gulp.dest('dev/'));
+  .pipe(gulp.dest('build/'));
 });
 
 gulp.task('scripts', function(){
@@ -47,7 +47,7 @@ gulp.task('scripts', function(){
         this.emit('end');
       }}))
   .pipe(uglify())
-  .pipe(gulp.dest('dev/js'));
+  .pipe(gulp.dest('build/js'));
 });
 
 gulp.task('images', function(){
@@ -56,11 +56,11 @@ gulp.task('images', function(){
     optimizationLevel: 3,
     progressive: true,
     interlaced: true})))
-  .pipe(gulp.dest('dev/img/'));
+  .pipe(gulp.dest('build/img/'));
 });
 
 gulp.task('cleanup', function() {
-  del(['dev/css', 'dev/js', 'dev/img']);
+  del(['build/css', 'build/js', 'build/img']);
 });
 
 gulp.task('default', ['cleanup'], function() {
@@ -76,10 +76,10 @@ gulp.task('watch', function(){
 // init server
   browserSync.init({
     server: {
-      proxy: "local.dev",
-      baseDir: "dev/"
+      proxy: "local.build",
+      baseDir: "build/"
     }
   });
 
-  gulp.watch(['dev/**'], browserSync.reload);
+  gulp.watch(['build/**'], browserSync.reload);
 });

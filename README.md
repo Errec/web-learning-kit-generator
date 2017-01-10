@@ -77,5 +77,5 @@ The structure presented in this boilerplate is grouped primarily by folder conte
 ├── templates                # Main folder for jade template files
 │   └── index.jade           # Index jade/pug markup goes here
 ├── .bowerrc                 # Setup bower library destination path
-├── gulpfile.js              # Gulp task runner setup file
+└── gulpfile.js              # Setup Gulp tasks
 ```
