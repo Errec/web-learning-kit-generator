@@ -41,7 +41,7 @@ gulp.task('templates', function(){
 });
 
 gulp.task('scripts', function(){
-  return gulp.src(['js/index.js', 'js/vendor/file1.js', 'js/vendor/file2.js'])
+  return gulp.src(['js/vendor/file1.js', 'js/vendor/file2.js', 'js/index.js'])
   .pipe(plumber({ errorHandler: onError }))
   .pipe(sourcemaps.init())
   .pipe(concat('all.js'))
