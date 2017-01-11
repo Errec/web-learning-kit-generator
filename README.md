@@ -60,6 +60,10 @@ $ bower install jquery --save
 $ bower install bootstrap --save
 ```
 
+### Running your local server
+
+
+
 ## Project Structure
 
 The structure presented in this boilerplate is grouped primarily by folder content and file type. Please note that this structure is only meant to serve as a guide, it is by no means prescriptive.
