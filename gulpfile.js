@@ -9,11 +9,12 @@ var gulp         = require('gulp');
 var imagemin     = require('gulp-imagemin');
 var jade         = require('gulp-jade');
 var plumber      = require('gulp-plumber');
+var rename       = require("gulp-rename");
 var sass         = require('gulp-sass');
 var sourcemaps   = require('gulp-sourcemaps');
 var uglify       = require('gulp-uglify');
 var gutil        = require('gulp-util');
-// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util --save-dev
+// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename --save-dev
 
 var onError = function (err) {
     beeper(3);
@@ -30,6 +31,7 @@ gulp.task('styles', function(){
     cascade: false}))
   .pipe(cleanCSS())
   .pipe(sourcemaps.write('.'))
+  .pipe(rename({ suffix: '.min'}))
   .pipe(gulp.dest('build/css'));
 });
 
@@ -47,6 +49,7 @@ gulp.task('scripts', function(){
   .pipe(concat('all.js'))
   .pipe(uglify())
   .pipe(sourcemaps.write('.'))
+  .pipe(rename({ suffix: '.min'}))
   .pipe(gulp.dest('build/js'));
 });
 
