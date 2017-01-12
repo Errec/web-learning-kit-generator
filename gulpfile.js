@@ -1,4 +1,3 @@
-var gulp         = require('gulp');
 var autoprefixer = require('gulp-autoprefixer');
 var beeper       = require('beeper');
 var browserSync  = require('browser-sync');
@@ -6,6 +5,7 @@ var cache        = require('gulp-cache');
 var cleanCSS     = require('gulp-clean-css');
 var concat       = require('gulp-concat');
 var del          = require('del');
+var gulp         = require('gulp');
 var imagemin     = require('gulp-imagemin');
 var jade         = require('gulp-jade');
 var plumber      = require('gulp-plumber');
@@ -41,7 +41,7 @@ gulp.task('templates', function(){
 });
 
 gulp.task('scripts', function(){
-  return gulp.src(['js/vendor/file1.js', 'js/vendor/file2.js', 'js/index.js'])
+  return gulp.src(['js/vendor/jquery/dist/jquery.js', 'js/vendor/bootstrap/dist/js/bootstrap.js', 'js/index.js'])
   .pipe(plumber({ errorHandler: onError }))
   .pipe(sourcemaps.init())
   .pipe(concat('all.js'))
