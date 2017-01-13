@@ -64,6 +64,9 @@ gulp.task('images', function(){
 
 gulp.task('cleanup', function() {
   del(['build/css', 'build/js', 'build/img']);
+  console.log("Moving Bootstrap fonts to 'build'");
+  gulp.src("js/vendor/bootstrap/dist/fonts/**.*")
+  .pipe(gulp.dest('build/js/vendor/bootstrap/dist/fonts/'));
 });
 
 gulp.task('default', ['cleanup'], function() {
