@@ -16,6 +16,7 @@ var uglify       = require('gulp-uglify');
 var gutil        = require('gulp-util');
 // sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename --save-dev
 
+var fs = require('fs');
 var onError = function (err) {
     beeper(3);
     gutil.log(gutil.colors.green(err));
@@ -62,14 +63,20 @@ gulp.task('images', function(){
   .pipe(gulp.dest('build/img/'));
 });
 
-gulp.task('cleanup', function() {
-  del(['build/css', 'build/js', 'build/img']);
-  console.log("Moving Bootstrap fonts to 'build'");
-  gulp.src("js/vendor/bootstrap/dist/fonts/**.*")
-  .pipe(gulp.dest('build/js/vendor/bootstrap/dist/fonts/'));
+gulp.task('clean', function() {
+  console.log('Deleting .build/');
+  del(['build/']);
 });
 
-gulp.task('default', ['cleanup'], function() {
+gulp.task('copy-glyphicon-font', function() {
+  if (!fs.existsSync('build/js/vendor/bootstrap/dist/fonts/')) {
+    console.log("Moving Glyphicon fonts to 'build'");
+    gulp.src("js/vendor/bootstrap/dist/fonts/**.*")
+    .pipe(gulp.dest('build/js/vendor/bootstrap/dist/fonts/'));
+  }
+});
+
+gulp.task('default',['copy-glyphicon-font'], function() {
   gulp.start('styles', 'templates', 'scripts', 'images');
 });
 
