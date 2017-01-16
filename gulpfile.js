@@ -8,18 +8,25 @@ var del          = require('del');
 var gulp         = require('gulp');
 var imagemin     = require('gulp-imagemin');
 var jade         = require('gulp-jade');
+var notify      = require('gulp-notify');
 var plumber      = require('gulp-plumber');
 var rename       = require("gulp-rename");
 var sass         = require('gulp-sass');
 var sourcemaps   = require('gulp-sourcemaps');
 var uglify       = require('gulp-uglify');
 var gutil        = require('gulp-util');
-// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename --save-dev
+// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 
 var fs = require('fs');
-var onError = function (err) {
+
+var onError = function(err) {
+    notify.onError({
+      title:    "Gulp error in " + err.plugin,
+      message:  err.toString()
+    })(err);
     beeper(3);
-    gutil.log(gutil.colors.green(err));
+    this.emit('end');
+    gutil.log(gutil.colors.red(err));
 };
 
 gulp.task('styles', function(){
