@@ -72,11 +72,11 @@ The structure presented in this boilerplate is grouped primarily by folder conte
 ├── img                      # Main folder for image files
 ├── js                       # Main folder for JS files
 │   ├── vendor               # Store third part library files (e.g.: jquery, bootstrap)
-│   └── index.js             # Index JS code goes here
+│   └── main.js             # Index JS code goes here
 ├── styles                   # Main folder for cascade style files
 │   ├── modules              # Store third party modules and initializers (e.g.: normalize)
 │   ├── variables            # Store sass variables files
-│   └── index.scss           # Index Sass goes here
+│   └── main.scss           # Index Sass goes here
 ├── templates                # Main folder for jade template files
 │   └── index.jade           # Index jade/pug markup goes here
 ├── .bowerrc                 # Setup bower library destination path

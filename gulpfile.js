@@ -51,7 +51,7 @@ gulp.task('templates', function(){
 });
 
 gulp.task('scripts', function(){
-  return gulp.src(['js/vendor/jquery/dist/jquery.js', 'js/vendor/bootstrap/dist/js/bootstrap.js', 'js/index.js'])
+  return gulp.src(['js/vendor/jquery/dist/jquery.min.js', 'js/vendor/bootstrap/dist/js/bootstrap.min.js', 'js/main.js'])
   .pipe(plumber({ errorHandler: onError }))
   .pipe(sourcemaps.init())
   .pipe(concat('all.js'))
