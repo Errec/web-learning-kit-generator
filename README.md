@@ -30,7 +30,7 @@ This starter kit and boilerplate project is based on a simple workflow for small
 
 After [Node.js](https://nodejs.org/en/download/), [npm](https://docs.npmjs.com/getting-started/installing-node), [Gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md) and [Bower](https://bower.io/#install-bower) installation, you can create a new project based on `pug-sass-boilerplate-starter-kit` by doing the following:
 
-### Install from source
+### Install From Source
 
 First, clone the project:
 
@@ -48,7 +48,7 @@ $ npm init
 Then install `Gulp` required dependencies
 
 ```bash
-$ sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util --save-dev
+$ sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 ```
 
 Finally initialize `Bower` and install the dependencies
@@ -59,9 +59,19 @@ $ bower install jquery --save
 $ bower install bootstrap --save
 ```
 
-### Running your local server
+### Running Your Local Server With Gulp
 
+After the installation of all requirements and its dependencies, your local web development environment is ready to run. First run a gulp task to create your `build` directory: on `<my-project-name>`:
 
+```bash
+$ gulp
+```
+
+Now your local server is ready to run using
+
+```bash
+$ gulp watch
+```
 
 ## Project Structure
 
@@ -82,3 +92,5 @@ The structure presented in this boilerplate is grouped primarily by folder conte
 ├── .bowerrc                 # Setup bower library destination path
 └── gulpfile.js              # Setup Gulp tasks
 ```
+
+## The Output Contents
