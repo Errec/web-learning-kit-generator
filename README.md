@@ -61,13 +61,13 @@ $ bower install bootstrap --save
 
 ### Running Your Local Server With Gulp
 
-After the installation of all requirements and its dependencies, your local web development environment is ready to run. First run a gulp task to create your `build` directory: on `<my-project-name>`:
+After the installation of all requirements and its dependencies, your local web development environment is ready to run. First run gulp's `default` task to create your `/build` directory: on `<my-project-name>`:
 
 ```bash
 $ gulp
 ```
 
-Now your local server is ready to run using
+Now run your local server using the `watch` task
 
 ```bash
 $ gulp watch
@@ -79,18 +79,19 @@ The structure presented in this boilerplate is grouped primarily by folder conte
 
 ```
 .
+├── build                    # Store processed/minified files - your project's deployable output
 ├── img                      # Main folder for image files
 ├── js                       # Main folder for JS files
 │   ├── vendor               # Store third part library files (e.g.: jquery, bootstrap)
-│   └── main.js             # Index JS code goes here
+│   └── main.js              # Index JS code goes here
 ├── styles                   # Main folder for cascade style files
-│   ├── modules              # Store third party modules and initializers (e.g.: normalize)
+│   ├── modules              # Store third party modules and initializers (e.g.: normalize, reset)
 │   ├── variables            # Store sass variables files
-│   └── main.scss           # Index Sass goes here
+│   └── main.scss            # Index Sass goes here
 ├── templates                # Main folder for jade template files
 │   └── index.jade           # Index jade/pug markup goes here
-├── .bowerrc                 # Setup bower library destination path
+├── .bowerrc                 # Change bower library destination path from its default
 └── gulpfile.js              # Setup Gulp tasks
 ```
 
-## The Output Contents
+## The .build Contents
