@@ -73,25 +73,36 @@ Now run your local server using the `watch` task
 $ gulp watch
 ```
 
+This task will open the browser window with the URL http://localhost:3000/. Any changes made to the project files, will reload automatically the browser.
+
 ## Project Structure
 
 The structure presented in this boilerplate is grouped primarily by folder content and file type. Please note that this structure is only meant to serve as a guide, it is by no means prescriptive.
 
 ```
 .
-├── build                    # Store processed/minified files - your project's deployable output
-├── img                      # Main folder for image files
-├── js                       # Main folder for JS files
-│   ├── vendor               # Store third part library files (e.g.: jquery, bootstrap)
-│   └── main.js              # Index JS code goes here
-├── styles                   # Main folder for cascade style files
-│   ├── modules              # Store third party modules and initializers (e.g.: normalize, reset)
-│   ├── variables            # Store sass variables files
-│   └── main.scss            # Index Sass goes here
-├── templates                # Main folder for jade template files
-│   └── index.jade           # Index jade/pug markup goes here
-├── .bowerrc                 # Change bower library destination path from its default
-└── gulpfile.js              # Setup Gulp tasks
+├── build                       # Store processed/minified files - your project's deployable output
+├── img                         # Main folder for image files
+├── js                          # Main folder for JS files
+│   ├── vendor                  # Store third part library files (e.g.: jquery, bootstrap)
+│   └── main.js                 # Index JS code goes here
+├── styles                      # Main folder for cascade style files
+│   ├── modules                 # Store third party modules and initializers (e.g.: normalize, reset)
+│   ├── variables               # Store sass variables files
+│   └── main.scss               # Index Sass goes here
+├── templates                   # Main folder for jade template files
+│   └── index.jade              # Index jade/pug markup goes here
+├── .bowerrc                    # Change bower library destination path from its default
+└── gulpfile.js                 # Setup Gulp tasks
 ```
 
-## The .build Contents
+### The /build Contents
+
+```
+.
+├── build
+    ├── img                     # Contains the compressed and optimized image files
+    ├── css                     # Contains the concatenated/minimized .css files and .map files
+    └── js                      # Contains the concatenated/uglyfied .js files and .map files
+        └──  vendor             # Store third part library non code files (e.g.: fonts)
+```
