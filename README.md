@@ -2,7 +2,7 @@
 
 Pug-Sass Boilerplate Starter Kit is a Front-end web kit and boilerplate for building web apps or sites using Pug(Jade) and Sass
 
-This starter kit and boilerplate project is based on a simple workflow for small apps and personal sites. It gives a solid starting point for newcomers who wants a ready to deploy local environment setup. The sources used to build this project includes:
+This project is based on a simple workflow for small apps and personal sites. It gives a solid starting point for newcomers who wants a ready-to-deploy local environment setup. The sources used to build this project includes:
 
   * [H5BP Project](https://github.com/h5bp/html5-boilerplate)
   * [React Redux Starter Kit](https://github.com/davezuko/react-redux-starter-kit)
@@ -16,6 +16,9 @@ This starter kit and boilerplate project is based on a simple workflow for small
   * Easy to deploy your production files
   * Includes:
     * [`Normalize.css`](https://necolas.github.com/normalize.css/) for CSS normalizations and common bug fixes
+    * [`Bootstrap`](http://getbootstrap.com/)
+    * [`html5shiv`](https://github.com/aFarkas/html5shiv)
+    * [`jQuery`](https://jquery.com/)
     * [`gulpfile.js`](http://gulpjs.com/) with Gulp presets
     * `Sass variables` with with popular color palettes
 
@@ -57,11 +60,12 @@ Finally initialize `Bower` and install the dependencies
 $ bower init
 $ bower install jquery --save
 $ bower install bootstrap --save
+$ bower install html5shiv --save
 ```
 
 ### Running Your Local Server With Gulp
 
-After the installation of all requirements and its dependencies, your local web development environment is ready to run. First run gulp's `default` task to create your `/build` directory: on `<my-project-name>`:
+After the installation of all requirements and its dependencies, your local web development environment is ready to run. First run gulp's `default` task to create your `build/` directory: on `<my-project-name>`:
 
 ```bash
 $ gulp
@@ -81,28 +85,28 @@ The structure presented in this boilerplate is grouped primarily by folder conte
 
 ```
 .
-├── build                       # Store processed/minified files - your project's deployable output
-├── img                         # Main folder for image files
-├── js                          # Main folder for JS files
-│   ├── vendor                  # Store third part library files (e.g.: jquery, bootstrap)
+├── build/                      # Store processed/minified files - your project's deployable output
+├── img/                        # Main folder for image files
+├── js/                         # Main folder for JS files
+│   ├── vendor/                 # Store third part library files (e.g.: jquery, bootstrap)
 │   └── main.js                 # Index JS code goes here
-├── styles                      # Main folder for cascade style files
-│   ├── modules                 # Store third party modules and initializers (e.g.: normalize, reset)
-│   ├── variables               # Store sass variables files
+├── styles/                     # Main folder for cascade style files
+│   ├── modules/                # Store third party modules and initializers (e.g.: normalize, reset)
+│   ├── variables/              # Store sass variables files
 │   └── main.scss               # Index Sass goes here
-├── templates                   # Main folder for jade template files
+├── templates/                  # Main folder for jade template files
 │   └── index.jade              # Index jade/pug markup goes here
 ├── .bowerrc                    # Change bower library destination path from its default
 └── gulpfile.js                 # Setup Gulp tasks
 ```
 
-### The /build Contents
+### The build/ Contents
 
 ```
 .
-├── build
-    ├── img                     # Contains the compressed and optimized image files
-    ├── css                     # Contains the concatenated/minimized .css files and .map files
-    └── js                      # Contains the concatenated/uglyfied .js files and .map files
-        └──  vendor             # Store third part library non code files (e.g.: fonts)
+├── build/
+    ├── img/                    # Contains the compressed and optimized image files
+    ├── css/                    # Contains the concatenated/minimized .css files and .map files
+    └── js/                     # Contains the concatenated/uglyfied .js files and .map files
+        └── vendor/             # Store third part library non code files (e.g.: fonts)
 ```
