@@ -17,7 +17,8 @@ This project is based on a simple workflow for small apps and personal sites. It
   * Includes:
     * [`Normalize.css`](https://necolas.github.com/normalize.css/) for CSS normalizations and common bug fixes
     * [`Bootstrap`](http://getbootstrap.com/)
-    * [`html5shiv`](https://github.com/aFarkas/html5shiv)
+    * [`html5shiv`](https://github.com/aFarkas/html5shiv) via CDN
+    * [`Respond`](https://github.com/scottjehl/Respond) via CDN
     * [`jQuery`](https://jquery.com/)
     * [`gulpfile.js`](http://gulpjs.com/) with Gulp presets
     * `Sass variables` with with popular color palettes
