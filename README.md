@@ -61,7 +61,6 @@ Finally initialize `Bower` and install the dependencies
 $ bower init
 $ bower install jquery --save
 $ bower install bootstrap --save
-$ bower install html5shiv --save
 ```
 
 ### Running Your Local Server With Gulp
