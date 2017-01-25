@@ -2,11 +2,14 @@
 
 Pug-Sass Boilerplate Starter Kit is a Front-end web kit and boilerplate for building web apps or sites using Pug(Jade) and Sass
 
+## Inspiration
+
 This project is based on a simple workflow for small apps and personal sites. It gives a solid starting point for newcomers who wants a ready-to-deploy local environment setup. The sources used to build this project includes:
 
   * [H5BP Project](https://github.com/h5bp/html5-boilerplate)
   * [React Redux Starter Kit](https://github.com/davezuko/react-redux-starter-kit)
   * [Mark Goodyear's Blog](https://markgoodyear.com/2014/01/getting-started-with-gulp/)
+  * [Web Starter Kit](https://github.com/google/web-starter-kit)
   * [Material Design Palette](https://www.materialpalette.com/)
   * [Flat UI Colors](https://flatuicolors.com/)
 
@@ -14,12 +17,14 @@ This project is based on a simple workflow for small apps and personal sites. It
 
   * Pug-Sass ready.
   * Easy to deploy your production files
+  * Performance optimization: minify and concatenate JavaScript, CSS, HTML and images
+  * Live browser reloading with `BrowserSync`
   * Includes:
     * [`Normalize.css`](https://necolas.github.com/normalize.css/) for CSS normalizations and common bug fixes
-    * [`Bootstrap`](http://getbootstrap.com/)
+    * [`jQuery`](https://jquery.com/) via Bower installation
+    * [`Bootstrap`](http://getbootstrap.com/) via Bower installation
     * [`html5shiv`](https://github.com/aFarkas/html5shiv) via CDN
     * [`Respond`](https://github.com/scottjehl/Respond) via CDN
-    * [`jQuery`](https://jquery.com/)
     * [`gulpfile.js`](http://gulpjs.com/) with Gulp presets
     * `Sass variables` with with popular color palettes
 
