@@ -54,6 +54,12 @@ $ cd <my-project-name>
 $ npm init
 ```
 
+Install `Gulp` locally
+
+```bash
+$ npm install gulp --save-dev
+```
+
 Then install `Gulp` required dependencies
 
 ```bash
