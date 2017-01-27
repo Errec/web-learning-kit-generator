@@ -90,10 +90,10 @@ gulp.task('default',['copy-glyphicon-font'], function() {
 });
 
 gulp.task('watch', function(){
-  gulp.watch('styles/**/*',                     ['styles']);
-  gulp.watch(['templates/*.jade', './*.jade'] , ['templates']);
-  gulp.watch('js/*.js',                         ['scripts']);
-  gulp.watch('img/**/*',                        ['images']);
+  gulp.watch('styles/**/*',                        ['styles']);
+  gulp.watch(['templates/**/*.jade', './*.jade'],  ['templates']);
+  gulp.watch('js/*.js',                            ['scripts']);
+  gulp.watch('img/**/*',                           ['images']);
 
 // init server
   browserSync.init({
