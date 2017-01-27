@@ -63,7 +63,7 @@ $ npm install gulp --save-dev
 Then install `Gulp` required dependencies
 
 ```bash
-$ sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
+$ sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 ```
 
 Finally initialize `Bower` and install the dependencies
@@ -105,10 +105,10 @@ The structure presented in this boilerplate is grouped primarily by folder conte
 │   ├── modules/                # Store third party modules and initializers (e.g.: normalize, reset)
 │   ├── variables/              # Store sass variables files
 │   └── main.scss               # Index Sass goes here
-├── templates/                  # Main folder for jade template files
+├── templates/                  # Main folder for pug template files
 ├── .bowerrc                    # Change bower library destination path from its default
 ├── gulpfile.js                 # Setup Gulp tasks
-└── index.jade                  # Index jade/pug markup goes here
+└── index.pug                   # Index pug markup goes here
 ```
 
 ### The build/ Contents
@@ -117,7 +117,8 @@ The structure presented in this boilerplate is grouped primarily by folder conte
 .
 ├── build/
     ├── img/                    # Contains the compressed and optimized image files
-    ├── css/                    # Contains the concatenated/minimized .css files and .map files
-    └── js/                     # Contains the concatenated/uglyfied .js files and .map files
-        └── vendor/             # Store third part library non code files (e.g.: fonts)
+    ├── css/                    # Contains the concatenated/minified .css files and .map files
+    ├── js/                     # Contains the concatenated/minified/uglyfied .js files and .map files
+    │   └── vendor/             # Store third part library non code files (e.g.: fonts)
+    └── index.html              # Minified html index file
 ```

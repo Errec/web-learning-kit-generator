@@ -7,15 +7,15 @@ var concat       = require('gulp-concat');
 var del          = require('del');
 var gulp         = require('gulp');
 var imagemin     = require('gulp-imagemin');
-var jade         = require('gulp-jade');
-var notify      = require('gulp-notify');
+var notify       = require('gulp-notify');
 var plumber      = require('gulp-plumber');
+var pug          = require('gulp-pug');
 var rename       = require("gulp-rename");
 var sass         = require('gulp-sass');
 var sourcemaps   = require('gulp-sourcemaps');
 var uglify       = require('gulp-uglify');
 var gutil        = require('gulp-util');
-// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
+// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 
 // Holds the js files to be concatenated
 var jsFiles = [ 'js/vendor/jquery/dist/jquery.min.js',
@@ -49,9 +49,9 @@ gulp.task('styles', function() {
 });
 
 gulp.task('templates', function() {
-  gulp.src('./*.jade')
+  gulp.src('./*.pug')
   .pipe(plumber({ errorHandler: onError }))
-  .pipe(jade())
+  .pipe(pug())
   .pipe(gulp.dest('build/'));
 });
 
@@ -94,7 +94,7 @@ gulp.task('default',['copy-glyphicon-font'], function() {
 
 gulp.task('watch', function() {
   gulp.watch('styles/**/*',                        ['styles']);
-  gulp.watch(['templates/**/*.jade', './*.jade'],  ['templates']);
+  gulp.watch(['templates/**/*.pug', './*.pug'],    ['templates']);
   gulp.watch('js/*.js',                            ['scripts']);
   gulp.watch('img/**/*',                           ['images']);
 
