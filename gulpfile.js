@@ -17,10 +17,13 @@ var uglify       = require('gulp-uglify');
 var gutil        = require('gulp-util');
 // sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 
+// Holds the js files to be concatenated
 var jsFiles = [ 'js/vendor/jquery/dist/jquery.min.js',
                 'js/vendor/bootstrap/dist/js/bootstrap.min.js',
                 'js/main.js'];
+// Used in existsSync to check if font directory patch exist
 var fs = require('fs');
+// Custom error msg with beep sound and text color
 var onError = function(err) {
     notify.onError({
       title:    "Gulp error in " + err.plugin,
@@ -31,7 +34,7 @@ var onError = function(err) {
     gutil.log(gutil.colors.red(err));
 };
 
-gulp.task('styles', function(){
+gulp.task('styles', function() {
   gulp.src('styles/*.scss')
   .pipe(plumber({ errorHandler: onError }))
   .pipe(sourcemaps.init())
@@ -45,14 +48,14 @@ gulp.task('styles', function(){
   .pipe(gulp.dest('build/css'));
 });
 
-gulp.task('templates', function(){
+gulp.task('templates', function() {
   gulp.src('./*.jade')
   .pipe(plumber({ errorHandler: onError }))
   .pipe(jade())
   .pipe(gulp.dest('build/'));
 });
 
-gulp.task('scripts', function(){
+gulp.task('scripts', function() {
   return gulp.src(jsFiles)
   .pipe(plumber({ errorHandler: onError }))
   .pipe(sourcemaps.init())
@@ -63,7 +66,7 @@ gulp.task('scripts', function(){
   .pipe(gulp.dest('build/js'));
 });
 
-gulp.task('images', function(){
+gulp.task('images', function() {
   gulp.src('img/**/*')
   .pipe(cache(imagemin({
     optimizationLevel: 3,
@@ -89,7 +92,7 @@ gulp.task('default',['copy-glyphicon-font'], function() {
   gulp.start('styles', 'templates', 'scripts', 'images');
 });
 
-gulp.task('watch', function(){
+gulp.task('watch', function() {
   gulp.watch('styles/**/*',                        ['styles']);
   gulp.watch(['templates/**/*.jade', './*.jade'],  ['templates']);
   gulp.watch('js/*.js',                            ['scripts']);
