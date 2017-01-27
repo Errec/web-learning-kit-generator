@@ -17,8 +17,10 @@ var uglify       = require('gulp-uglify');
 var gutil        = require('gulp-util');
 // sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-jade gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 
+var jsFiles = [ 'js/vendor/jquery/dist/jquery.min.js',
+                'js/vendor/bootstrap/dist/js/bootstrap.min.js',
+                'js/main.js'];
 var fs = require('fs');
-
 var onError = function(err) {
     notify.onError({
       title:    "Gulp error in " + err.plugin,
@@ -51,7 +53,7 @@ gulp.task('templates', function(){
 });
 
 gulp.task('scripts', function(){
-  return gulp.src(['js/vendor/jquery/dist/jquery.min.js', 'js/vendor/bootstrap/dist/js/bootstrap.min.js', 'js/main.js'])
+  return gulp.src(jsFiles)
   .pipe(plumber({ errorHandler: onError }))
   .pipe(sourcemaps.init())
   .pipe(concat('all.js'))
