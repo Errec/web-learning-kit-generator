@@ -106,8 +106,8 @@ The structure presented in this boilerplate is grouped primarily by folder conte
 │   ├── variables/              # Store sass variables files
 │   └── main.scss               # Index Sass goes here
 ├── templates/                  # Main folder for jade template files
-│   └── index.jade              # Index jade/pug markup goes here
 ├── .bowerrc                    # Change bower library destination path from its default
+├── index.jade                  # Index jade/pug markup goes here
 └── gulpfile.js                 # Setup Gulp tasks
 ```
 

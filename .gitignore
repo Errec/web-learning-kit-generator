@@ -1,4 +1,5 @@
 node_modules/
+.gitignore
 
 # bower_components:
 js/vendor
