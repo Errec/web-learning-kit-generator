@@ -46,7 +46,7 @@ gulp.task('styles', function(){
 });
 
 gulp.task('templates', function(){
-  gulp.src('templates/*.jade')
+  gulp.src('./*.jade')
   .pipe(plumber({ errorHandler: onError }))
   .pipe(jade())
   .pipe(gulp.dest('build/'));
@@ -90,10 +90,10 @@ gulp.task('default',['copy-glyphicon-font'], function() {
 });
 
 gulp.task('watch', function(){
-  gulp.watch('styles/**/*',      ['styles']);
-  gulp.watch('templates/*.jade', ['templates']);
-  gulp.watch('js/*.js',          ['scripts']);
-  gulp.watch('img/**/*',         ['images']);
+  gulp.watch('styles/**/*',                     ['styles']);
+  gulp.watch(['templates/*.jade', './*.jade'] , ['templates']);
+  gulp.watch('js/*.js',                         ['scripts']);
+  gulp.watch('img/**/*',                        ['images']);
 
 // init server
   browserSync.init({
