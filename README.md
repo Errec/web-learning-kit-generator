@@ -10,8 +10,6 @@ This project is based on a simple workflow for small apps and personal sites. It
   * [React Redux Starter Kit](https://github.com/davezuko/react-redux-starter-kit)
   * [Mark Goodyear's Blog](https://markgoodyear.com/2014/01/getting-started-with-gulp/)
   * [Web Starter Kit](https://github.com/google/web-starter-kit)
-  * [Material Design Palette](https://www.materialpalette.com/)
-  * [Flat UI Colors](https://flatuicolors.com/)
 
 ## Features
 
@@ -26,7 +24,7 @@ This project is based on a simple workflow for small apps and personal sites. It
     * [`html5shiv`](https://github.com/aFarkas/html5shiv) via CDN
     * [`Respond`](https://github.com/scottjehl/Respond) via CDN
     * [`gulpfile.js`](http://gulpjs.com/) with Gulp presets
-    * `Sass variables` with with popular color palettes
+    * `Sass variables` with with popular color palettes from [Material Design Palette](https://www.materialpalette.com/) and [Flat UI Colors](https://flatuicolors.com/)
 
 ## Requirements
 
