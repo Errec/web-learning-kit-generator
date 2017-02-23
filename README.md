@@ -55,7 +55,7 @@ $ npm init
 Install `Gulp` locally
 
 ```bash
-$ npm install gulp --save-dev
+$ sudo npm install gulp --save-dev
 ```
 
 Then install `Gulp` required dependencies
