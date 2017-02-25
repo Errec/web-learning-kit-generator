@@ -59,7 +59,7 @@ gulp.task('scripts', function() {
   return gulp.src(jsFiles)
   .pipe(plumber({ errorHandler: onError }))
   .pipe(sourcemaps.init())
-  .pipe(concat('all.js'))
+  .pipe(concat('bundle.js'))
   .pipe(uglify())
   .pipe(sourcemaps.write())
   .pipe(rename({ suffix: '.min'}))
