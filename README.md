@@ -117,3 +117,21 @@ The structure presented in this boilerplate is grouped primarily by folder conte
     │   └── vendor/             # Store third part library non code files (e.g.: fonts)
     └── index.html              # Minified html index file
 ```
+
+## The Gulp plugins
+
+* [Autoprefixer](https://github.com/postcss/autoprefixer) : Write CSS rules without vendor prefixes.
+* [beeper](https://github.com/sindresorhus/beeper) : Beeps when an error happens.
+* [BrowserSync](https://github.com/browsersync/browser-sync) : Keep multiple browsers in sync after file save.
+* [cache](https://github.com/jgable/gulp-cache) : Keeps an in-memory cache of files images so only changed images are compressed with Imagemin plugin.
+* [clean-css](https://github.com/jakubpawlowicz/clean-css) : CSS optimizer and minifier.
+* [concat](https://github.com/contra/gulp-concat) : Concatenates `.js` files into `bundle.js`.
+* [imagemin](https://github.com/sindresorhus/gulp-imagemin) : Minify PNG, JPEG, GIF and SVG images.
+* [notify](https://github.com/mikaelbr/gulp-notify) : Send error messages to Mac Notification Center, Linux notifications or Windows >= 8.
+* [plumber](https://github.com/floatdrop/gulp-plumber) : Prevent pipe breaking caused by errors from gulp plugins.
+* [Pug](https://github.com/pugjs/gulp-pug) : Compile your Pug templates into HTML.
+* [rename](https://github.com/hparra/gulp-rename) : Rename minified files adding `.min` suffix.
+* [SASS](https://github.com/dlmanning/gulp-sass) : Compile your SASS or SCSS into CSS.
+* [sourcemaps](https://github.com/floridoo/gulp-sourcemaps) : Create CSS and JavaScript map files to debug the code within compressed files.
+* [uglify](https://github.com/terinjokes/gulp-uglify) : Minify JavaScript files.
+* [gutil](https://github.com/gulpjs/gulp-util) : Log the error message with red highlighting for easier reading.
