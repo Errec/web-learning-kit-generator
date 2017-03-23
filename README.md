@@ -1,10 +1,10 @@
 # Pug-Sass Boilerplate Starter Kit
 
-Pug-Sass Boilerplate Starter Kit is a Front-end web kit and boilerplate for building web apps or sites using Pug(Jade) and Sass
+Pug-Sass Boilerplate Starter Kit is a Front-end web kit and boilerplate for building web apps or small sites using Pug(Jade) and Sass
 
 ## Inspiration
 
-This project is based on a simple workflow for small apps and personal sites. It gives a solid starting point for newcomers who wants a ready-to-deploy local environment setup. The sources used to build this project includes:
+This project is based on a simple and fast workflow focused mainly on the front-end task. It gives a solid starting point for newcomers who wants a ready-to-deploy local environment setup. The sources used to build this project includes:
 
   * [H5BP Project](https://github.com/h5bp/html5-boilerplate)
   * [React Redux Starter Kit](https://github.com/davezuko/react-redux-starter-kit)
@@ -31,6 +31,9 @@ This project is based on a simple workflow for small apps and personal sites. It
 * [Node.js](https://nodejs.org)
 * [npm](https://www.npmjs.com)
 * [Gulp](http://gulpjs.com/)
+
+## Optionals
+
 * [Bower](https://bower.io/)
 
 ## Getting Started
@@ -58,13 +61,13 @@ Install `Gulp` locally
 $ sudo npm install gulp --save-dev
 ```
 
-Then install `Gulp` required dependencies
+Finally, install `Gulp` required dependencies
 
 ```bash
 $ sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 ```
 
-Finally initialize `Bower` and install the dependencies
+Optionally, if you want to add external components and libraries, initialize `Bower` and install the dependencies to be used in your next project (e.g.: jQuery, Bootstrap, Modernizer).
 
 ```bash
 $ bower init
