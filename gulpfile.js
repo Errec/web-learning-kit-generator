@@ -19,7 +19,7 @@ var gutil        = require('gulp-util');
 // Holds the js files to be concatenated
 var jsFiles = [ 'js/vendor/jquery/dist/jquery.min.js',
                 'js/vendor/bootstrap/dist/js/bootstrap.min.js',
-                'js/main.js'];
+                'js/*.js'];
 // Used in existsSync to check if font directory patch exist
 var fs = require('fs');
 // Custom error msg with beep sound and text color
