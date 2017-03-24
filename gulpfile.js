@@ -4,7 +4,6 @@ var browserSync  = require('browser-sync');
 var cache        = require('gulp-cache');
 var cleanCSS     = require('gulp-clean-css');
 var concat       = require('gulp-concat');
-var del          = require('del');
 var gulp         = require('gulp');
 var imagemin     = require('gulp-imagemin');
 var notify       = require('gulp-notify');
@@ -15,7 +14,7 @@ var sass         = require('gulp-sass');
 var sourcemaps   = require('gulp-sourcemaps');
 var uglify       = require('gulp-uglify');
 var gutil        = require('gulp-util');
-// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin del gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
+// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 
 // Holds the js files to be concatenated
 var jsFiles = [ 'js/vendor/jquery/dist/jquery.min.js',
@@ -73,11 +72,6 @@ gulp.task('images', function() {
     progressive: true,
     interlaced: true})))
   .pipe(gulp.dest('build/img/'));
-});
-
-gulp.task('clean', function() {
-  console.log('Deleting .build/');
-  del(['build/']);
 });
 
 gulp.task('copy-glyphicon-font', function() {
