@@ -16,11 +16,10 @@ var uglify       = require('gulp-uglify');
 var gutil        = require('gulp-util');
 // sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 
-var jsVendorFiles = ['js/vendor/jquery/dist/jquery.min.js', // Holds the js vendor files to be concatenated
-                   'js/vendor/bootstrap/dist/js/bootstrap.min.js'];
-var myJsFiles     = ['js/*.js'];                            // Holds the js files to be concatenated
-var fs          = require('fs');                          // ExistsSync var to check if font directory patch exist
-var onError     = function(err) {                         // Custom error msg with beep sound and text color
+var jsVendorFiles = [];             // Holds the js vendor files to be concatenated
+var myJsFiles     = ['js/*.js'];    // Holds the js files to be concatenated
+var fs            = require('fs');  // ExistsSync var to check if font directory patch exist
+var onError       = function(err) { // Custom error msg with beep sound and text color
     notify.onError({
       title:    "Gulp error in " + err.plugin,
       message:  err.toString()
@@ -71,15 +70,22 @@ gulp.task('images', function() {
   .pipe(gulp.dest('build/img/'));
 });
 
-gulp.task('copy-glyphicon-font', function() {
-  if (!fs.existsSync('build/js/vendor/bootstrap/dist/fonts/')) {
-    console.log("Moving Glyphicon fonts to 'build'");
+gulp.task('check-vendor', function() {
+  if (!fs.existsSync('js/vendor/bootstrap/dist/js/bootstrap.min.js')) {
     gulp.src("js/vendor/bootstrap/dist/fonts/**.*")
     .pipe(gulp.dest('build/js/vendor/bootstrap/dist/fonts/'));
+    gulp.src("js/vendor/bootstrap/dist/js/bootstrap.min.js")
+    .pipe(gulp.dest('build/js/vendor/bootstrap/dist/js/'));
+    // jsVendorFiles.push("js/vendor/bootstrap/dist/js/bootstrap.min.js");
+  }
+  if (!fs.existsSync('js/vendor/jquery/dist/jquery.min.js')) {
+    gulp.src("js/vendor/jquery/dist/jquery.min.js")
+    .pipe(gulp.dest('build/js/vendor/jquery/dist/jquery/'));
+    // jsVendorFiles.push("js/vendor/jquery/dist/jquery.min.js");
   }
 });
 
-gulp.task('default',['copy-glyphicon-font'], function() {
+gulp.task('default',['check-vendor'], function() {
   gulp.start('styles', 'templates', 'scripts', 'images');
 });
 
