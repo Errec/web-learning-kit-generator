@@ -3,7 +3,7 @@ var beeper       = require('beeper');
 var browserSync  = require('browser-sync');
 var cache        = require('gulp-cache');
 var cleanCSS     = require('gulp-clean-css');
-var concat       = require('gulp-concat');
+var gconcat       = require('gulp-concat');
 var gulp         = require('gulp');
 var imagemin     = require('gulp-imagemin');
 var notify       = require('gulp-notify');
@@ -16,14 +16,11 @@ var uglify       = require('gulp-uglify');
 var gutil        = require('gulp-util');
 // sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 
-// Holds the js files to be concatenated
-var jsFiles = [ 'js/vendor/jquery/dist/jquery.min.js',
-                'js/vendor/bootstrap/dist/js/bootstrap.min.js',
-                'js/*.js'];
-// Used in existsSync to check if font directory patch exist
-var fs = require('fs');
-// Custom error msg with beep sound and text color
-var onError = function(err) {
+var jsVendorFiles = ['js/vendor/jquery/dist/jquery.min.js', // Holds the js vendor files to be concatenated
+                   'js/vendor/bootstrap/dist/js/bootstrap.min.js'];
+var myJsFiles     = ['js/*.js'];                            // Holds the js files to be concatenated
+var fs          = require('fs');                          // ExistsSync var to check if font directory patch exist
+var onError     = function(err) {                         // Custom error msg with beep sound and text color
     notify.onError({
       title:    "Gulp error in " + err.plugin,
       message:  err.toString()
@@ -55,10 +52,10 @@ gulp.task('templates', function() {
 });
 
 gulp.task('scripts', function() {
-  return gulp.src(jsFiles)
+  return gulp.src(myJsFiles.concat(jsVendorFiles))
   .pipe(plumber({ errorHandler: onError }))
   .pipe(sourcemaps.init())
-  .pipe(concat('bundle.js'))
+  .pipe(gconcat('bundle.js'))
   .pipe(uglify())
   .pipe(sourcemaps.write())
   .pipe(rename({ suffix: '.min'}))
