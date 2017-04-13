@@ -15,7 +15,6 @@ var sourcemaps   = require('gulp-sourcemaps');
 var uglify       = require('gulp-uglify');
 var gutil        = require('gulp-util');
 // sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
-
 var jsVendorFiles = [];             // Holds the js vendor files to be concatenated
 var myJsFiles     = ['js/*.js'];    // Holds the js files to be concatenated
 var fs            = require('fs');  // ExistsSync var to check if font directory patch exist
@@ -28,6 +27,11 @@ var onError       = function(err) { // Custom error msg with beep sound and text
     this.emit('end');
     gutil.log(gutil.colors.red(err));
 };
+var bowerDest          = "js/vendor/";
+var buildPath          = "build";
+var bootstrapPath      = "bootstrap/dist/js/bootstrap.min.js";
+var bootstrapFontsPath = "bootstrap/dist/fonts/**.*";
+var jqueryPath         = "jquery/dist/jquery.min.js";
 
 gulp.task('styles', function() {
   gulp.src('styles/*.scss')
@@ -70,22 +74,22 @@ gulp.task('images', function() {
   .pipe(gulp.dest('build/img/'));
 });
 
-gulp.task('check-vendor', function() {
-  if (!fs.existsSync('js/vendor/bootstrap/dist/js/bootstrap.min.js')) {
-    gulp.src("js/vendor/bootstrap/dist/fonts/**.*")
+gulp.task('check-bower-vendor', function() {
+  if (!fs.existsSync(bowerDest + bootstrapPath)) {
+    gulp.src(bowerDest + bootstrapFontsPath)
     .pipe(gulp.dest('build/js/vendor/bootstrap/dist/fonts/'));
-    gulp.src("js/vendor/bootstrap/dist/js/bootstrap.min.js")
+    gulp.src(bowerDest + bootstrapPath)
     .pipe(gulp.dest('build/js/vendor/bootstrap/dist/js/'));
     // jsVendorFiles.push("js/vendor/bootstrap/dist/js/bootstrap.min.js");
   }
-  if (!fs.existsSync('js/vendor/jquery/dist/jquery.min.js')) {
-    gulp.src("js/vendor/jquery/dist/jquery.min.js")
+  if (!fs.existsSync(bowerDest + jqueryPath)) {
+    gulp.src(bowerDest + jqueryPath)
     .pipe(gulp.dest('build/js/vendor/jquery/dist/jquery/'));
     // jsVendorFiles.push("js/vendor/jquery/dist/jquery.min.js");
   }
 });
 
-gulp.task('default',['check-vendor'], function() {
+gulp.task('default',['check-bower-vendor'], function() {
   gulp.start('styles', 'templates', 'scripts', 'images');
 });
 
