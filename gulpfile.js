@@ -3,8 +3,7 @@ var beeper       = require('beeper');
 var browserSync  = require('browser-sync');
 var cache        = require('gulp-cache');
 var cleanCSS     = require('gulp-clean-css');
-var footer       = require('gulp-footer');
-var gconcat       = require('gulp-concat');
+var gconcat      = require('gulp-concat');
 var gulp         = require('gulp');
 var gutil        = require('gulp-util');
 var imagemin     = require('gulp-imagemin');
@@ -15,7 +14,7 @@ var rename       = require("gulp-rename");
 var sass         = require('gulp-sass');
 var sourcemaps   = require('gulp-sourcemaps');
 var uglify       = require('gulp-uglify');
-// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify gulp-footer --save-dev
+// sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 var jsVendorFiles = [];             // Holds the js vendor files to be concatenated
 var myJsFiles     = ['js/*.js'];    // Holds the js files to be concatenated
 var fs            = require('fs');  // ExistsSync var to check if font directory patch exist
@@ -82,13 +81,11 @@ gulp.task('check-bower-vendor', function() {
     .pipe(gulp.dest('build/js/vendor/bootstrap/dist/fonts/'));
     gulp.src(bowerDest + bootstrapPath)
     .pipe(gulp.dest('build/js/vendor/bootstrap/dist/js/'));
-    // jsVendorFiles.push("js/vendor/bootstrap/dist/js/bootstrap.min.js");
   }
 
   if (!fs.existsSync(bowerDest + jqueryPath)) {
     gulp.src(bowerDest + jqueryPath)
     .pipe(gulp.dest('build/js/vendor/jquery/dist/jquery/'));
-    // jsVendorFiles.push("js/vendor/jquery/dist/jquery.min.js");
   }
 });
 
