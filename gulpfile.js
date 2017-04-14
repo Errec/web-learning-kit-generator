@@ -18,9 +18,11 @@ var uglify             = require('gulp-uglify');
 var jsVendorFiles      = [];             // Holds the js vendor files to be concatenated
 var myJsFiles          = ['js/*.js'];    // Holds the js files to be concatenated
 var fs                 = require('fs');  // ExistsSync var to check if font directory patch exist
-var bootstrapPath      = "/js/vendor/bootstrap/dist/js/bootstrap.min.js";
+var bootstrapJSPath    = "/js/vendor/bootstrap/dist/js/bootstrap.min.js";
+var bootstrapCSSPath   = "/js/vendor/bootstrap/dist/css/bootstrap.min.css";
 var bootstrapFontsPath = "/js/vendor/bootstrap/dist/fonts/**.*";
 var jqueryPath         = "/js/vendor/jquery/dist/jquery.min.js";
+var bootstrapExist     = false;
 var onError            = function(err) { // Custom error msg with beep sound and text color
     notify.onError({
       title:    "Gulp error in " + err.plugin,
@@ -30,6 +32,15 @@ var onError            = function(err) { // Custom error msg with beep sound and
     this.emit('end');
     gutil.log(gutil.colors.red(err));
 };
+
+function setupJquery(data) {
+  var jqueryCDN = '  script(src="https://code.jquery.com/jquery-{{JQUERY_VERSION}}.min.js" integrity="{{JQUERY_SRI_HASH}}" crossorigin="anonymous")';
+  var jqueryLocalFallback = "  <script>window.jQuery || document.write(" + "'<script src=" + '"js/vendor/jquery/dist/jquery/jquery.min.js"' + "><\\/script>')</script>";
+  gulp.src('.' + jqueryPath)
+  .pipe(gulp.dest('./build/js/vendor/jquery/dist/jquery'));
+  data.splice(data.length, 0, jqueryCDN);
+  data.splice(data.length, 0, jqueryLocalFallback);
+}
 
 gulp.task('styles', function() {
   gulp.src('styles/*.scss')
@@ -73,30 +84,49 @@ gulp.task('images', function() {
 });
 
 
-gulp.task('check-bower-vendor', function() {
-  if (!fs.existsSync(bootstrapPath)) {
+gulp.task('setup-src', function() {
+  var data = fs.readFileSync('./index.pug').toString().split("\n");
+
+  if (!fs.existsSync(bootstrapJSPath)) {
+    bootstrapExist = true;
+    setupJquery(data);
+    var bootstrapCSSCDN = '    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/{{BOOTSTRAP_VERSION}}/css/bootstrap.min.css", rel="stylesheet", integrity="{{BOOTSTRAP_SRI_HASH}}", crossorigin="anonymous")';
+    var bootstrapCSSLocalFallback = '  div(id="bootstrapCssTest" class="hidden")\n' + "  <script>$(function(){if ($('#bootstrapCssTest').is(':visible')){$('head').prepend('<link rel=" + '"stylesheet" href="/js/vendor/bootstrap/dist/css/bootstrap.min.css">' + "');}});</script>";
+    var bootstrapJSCDN = '  script(src="https://maxcdn.bootstrapcdn.com/bootstrap/{{BOOTSTRAP_VERSION}}/js/bootstrap.min.js", integrity="{{BOOTSTRAP_SRI_HASH}}", crossorigin="anonymous")';
+    var bootstrapJSLocalFallback = "  <script>if(typeof($.fn.modal) === 'undefined'" + ") {document.write('<script src=" + '"/js/vendor/bootstrap/dist/js/bootstrap.min.js"' + "><\\/script>')}</script>";
     gulp.src('.' + bootstrapFontsPath)
-    .pipe(gulp.dest('build/js/vendor/bootstrap/dist/fonts/'));
-    gulp.src('.' + bootstrapPath)
-    .pipe(gulp.dest('build/js/vendor/bootstrap/dist/js/'));
+    .pipe(gulp.dest('./build/js/vendor/bootstrap/dist/fonts'));
+    gulp.src('.' + bootstrapJSPath)
+    .pipe(gulp.dest('./build/js/vendor/bootstrap/dist/js'));
+    gulp.src('.' + bootstrapCSSPath)
+    .pipe(gulp.dest('./build/js/vendor/bootstrap/dist/css'));
+
+    data.splice(8, 0, bootstrapCSSCDN);
+    data.splice(data.length, 0, bootstrapJSCDN);
+    data.splice(data.length, 0, bootstrapJSLocalFallback);
+    data.splice(data.length, 0, bootstrapCSSLocalFallback);
   }
 
-  if (!fs.existsSync(jqueryPath)) {
-    gulp.src('.' + jqueryPath)
-    .pipe(gulp.dest('build/js/vendor/jquery/dist/jquery/'));
+  if(!fs.existsSync(jqueryPath) && !bootstrapExist) {
+    setupJquery(data);
   }
+
+  data.splice(data.length, 0, '  script(src="js/bundle.min.js")');
+  var text = data.join("\n");
+  fs.writeFile('./index.pug', text, function (err) {
+    if (err) throw err;
+  });
 });
 
 gulp.task('default', function() {
-  gulp.start('styles', 'templates', 'scripts', 'images', 'check-bower-vendor');
+  console.log("Use 'gulp setup' command to initialize the project files");
 });
 
 gulp.task('setup', function() {
-  gulp.start('styles', 'templates', 'scripts', 'images', 'check-bower-vendor');
+  gulp.start('styles', 'templates', 'scripts', 'images', 'setup-src');
 });
 
 gulp.task('watch', function() {
-  gulp.start('styles', 'templates', 'scripts', 'images');
   gulp.watch('styles/**/*',                        ['styles']);
   gulp.watch(['templates/**/*.pug', './*.pug'],    ['templates']);
   gulp.watch('js/*.js',                            ['scripts']);
