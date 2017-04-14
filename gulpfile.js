@@ -1,24 +1,27 @@
-var autoprefixer = require('gulp-autoprefixer');
-var beeper       = require('beeper');
-var browserSync  = require('browser-sync');
-var cache        = require('gulp-cache');
-var cleanCSS     = require('gulp-clean-css');
-var gconcat      = require('gulp-concat');
-var gulp         = require('gulp');
-var gutil        = require('gulp-util');
-var imagemin     = require('gulp-imagemin');
-var notify       = require('gulp-notify');
-var plumber      = require('gulp-plumber');
-var pug          = require('gulp-pug');
-var rename       = require("gulp-rename");
-var sass         = require('gulp-sass');
-var sourcemaps   = require('gulp-sourcemaps');
-var uglify       = require('gulp-uglify');
+var autoprefixer       = require('gulp-autoprefixer');
+var beeper             = require('beeper');
+var browserSync        = require('browser-sync');
+var cache              = require('gulp-cache');
+var cleanCSS           = require('gulp-clean-css');
+var gconcat            = require('gulp-concat');
+var gulp               = require('gulp');
+var gutil              = require('gulp-util');
+var imagemin           = require('gulp-imagemin');
+var notify             = require('gulp-notify');
+var plumber            = require('gulp-plumber');
+var pug                = require('gulp-pug');
+var rename             = require("gulp-rename");
+var sass               = require('gulp-sass');
+var sourcemaps         = require('gulp-sourcemaps');
+var uglify             = require('gulp-uglify');
 // sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
-var jsVendorFiles = [];             // Holds the js vendor files to be concatenated
-var myJsFiles     = ['js/*.js'];    // Holds the js files to be concatenated
-var fs            = require('fs');  // ExistsSync var to check if font directory patch exist
-var onError       = function(err) { // Custom error msg with beep sound and text color
+var jsVendorFiles      = [];             // Holds the js vendor files to be concatenated
+var myJsFiles          = ['js/*.js'];    // Holds the js files to be concatenated
+var fs                 = require('fs');  // ExistsSync var to check if font directory patch exist
+var bootstrapPath      = "/js/vendor/bootstrap/dist/js/bootstrap.min.js";
+var bootstrapFontsPath = "/js/vendor/bootstrap/dist/fonts/**.*";
+var jqueryPath         = "/js/vendor/jquery/dist/jquery.min.js";
+var onError            = function(err) { // Custom error msg with beep sound and text color
     notify.onError({
       title:    "Gulp error in " + err.plugin,
       message:  err.toString()
@@ -27,11 +30,6 @@ var onError       = function(err) { // Custom error msg with beep sound and text
     this.emit('end');
     gutil.log(gutil.colors.red(err));
 };
-var bowerDest          = "/js/vendor/";
-var buildPath          = "build";
-var bootstrapPath      = "bootstrap/dist/js/bootstrap.min.js";
-var bootstrapFontsPath = "bootstrap/dist/fonts/**.*";
-var jqueryPath         = "jquery/dist/jquery.min.js";
 
 gulp.task('styles', function() {
   gulp.src('styles/*.scss')
@@ -76,21 +74,25 @@ gulp.task('images', function() {
 
 
 gulp.task('check-bower-vendor', function() {
-  if (!fs.existsSync(bowerDest + bootstrapPath)) {
-    gulp.src(bowerDest + bootstrapFontsPath)
+  if (!fs.existsSync(bootstrapPath)) {
+    gulp.src('.' + bootstrapFontsPath)
     .pipe(gulp.dest('build/js/vendor/bootstrap/dist/fonts/'));
-    gulp.src(bowerDest + bootstrapPath)
+    gulp.src('.' + bootstrapPath)
     .pipe(gulp.dest('build/js/vendor/bootstrap/dist/js/'));
   }
 
-  if (!fs.existsSync(bowerDest + jqueryPath)) {
-    gulp.src(bowerDest + jqueryPath)
+  if (!fs.existsSync(jqueryPath)) {
+    gulp.src('.' + jqueryPath)
     .pipe(gulp.dest('build/js/vendor/jquery/dist/jquery/'));
   }
 });
 
-gulp.task('default',['check-bower-vendor'], function() {
-  gulp.start('styles', 'templates', 'scripts', 'images');
+gulp.task('default', function() {
+  gulp.start('styles', 'templates', 'scripts', 'images', 'check-bower-vendor');
+});
+
+gulp.task('setup', function() {
+  gulp.start('styles', 'templates', 'scripts', 'images', 'check-bower-vendor');
 });
 
 gulp.task('watch', function() {
