@@ -77,13 +77,19 @@ $ bower install bootstrap --save
 
 ### Running Your Local Server With Gulp
 
-After the installation of all requirements and its dependencies, your local web development environment is ready to run. Now run your local server using the `watch` task
+After the installation of all requirements and its dependencies, your local web development environment is ready to run. Setup your initial files with `gulp setup`. This command is only necessary the first time the project is set or if the build folder is deleted.
+
+```bash
+$ gulp setup
+```
+
+Now run your local server using the `watch` task
 
 ```bash
 $ gulp watch
 ```
 
-This task will open the browser window with the URL http://localhost:3000/. Any saved changes made to the project files, will reload automatically the browser.
+This task will open the browser window usually with the URL http://localhost:3000/. Any saved changes made to the project files, will reload automatically the browser.
 
 ## Project Structure
 
