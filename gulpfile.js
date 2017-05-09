@@ -42,6 +42,15 @@ function setupJquery(data) {
   data.splice(data.length, 0, jqueryLocalFallback);
 }
 
+function findKeyText(data, txt) {
+  for (var i = 0; i < data.length; i++) {
+    if(data[i].indexOf(txt) > -1) {
+      return true;
+    }
+  }
+  return false;
+}
+
 gulp.task('styles', function() {
   gulp.src('styles/*.scss')
   .pipe(plumber({ errorHandler: onError }))
@@ -87,7 +96,7 @@ gulp.task('images', function() {
 gulp.task('setup-src', function() {
   var data = fs.readFileSync('./index.pug').toString().split("\n");
 
-  if (fs.existsSync(bootstrapJSPath)) {
+  if (fs.existsSync(bootstrapJSPath) && !findKeyText(data, 'bootstrap.min.css')) {
     bootstrapExist = true;
     setupJquery(data);
     var bootstrapCSSCDN = '    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/{{BOOTSTRAP_VERSION}}/css/bootstrap.min.css", rel="stylesheet", integrity="{{BOOTSTRAP_SRI_HASH}}", crossorigin="anonymous")';
@@ -107,11 +116,14 @@ gulp.task('setup-src', function() {
     data.splice(data.length, 0, bootstrapCSSLocalFallback);
   }
 
-  if(fs.existsSync(jqueryPath) && !bootstrapExist) {
+  if(fs.existsSync(jqueryPath) && !bootstrapExist  && !findKeyText(data, 'jquery.min.js')) {
     setupJquery(data);
   }
 
+  if (!findKeyText(data, 'bundle.min.js')) {
   data.splice(data.length, 0, '  script(src="js/bundle.min.js")');
+  }
+
   var text = data.join("\n");
   fs.writeFile('./index.pug', text, function (err) {
     if (err) throw err;
