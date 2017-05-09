@@ -52,6 +52,26 @@ function setupJquery(data) {
   data.splice(data.length, 0, jqueryLocalFallback);
 }
 
+function setupBootstrap(data) {
+  bootstrapExist = true;
+  setupJquery(data);
+  var bootstrapCSSCDN = '    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/{{BOOTSTRAP_VERSION}}/css/bootstrap.min.css", rel="stylesheet", integrity="{{BOOTSTRAP_SRI_HASH}}", crossorigin="anonymous")';
+  var bootstrapCSSLocalFallback = '  div(id="bootstrapCssTest" class="hidden")\n' + "  <script>$(function(){if ($('#bootstrapCssTest').is(':visible')){$('head').prepend('<link rel=" + '"stylesheet" href="/js/vendor/bootstrap/dist/css/bootstrap.min.css">' + "');}});</script>";
+  var bootstrapJSCDN = '  script(src="https://maxcdn.bootstrapcdn.com/bootstrap/{{BOOTSTRAP_VERSION}}/js/bootstrap.min.js", integrity="{{BOOTSTRAP_SRI_HASH}}", crossorigin="anonymous")';
+  var bootstrapJSLocalFallback = "  <script>if(typeof($.fn.modal) === 'undefined'" + ") {document.write('<script src=" + '"/js/vendor/bootstrap/dist/js/bootstrap.min.js"' + "><\\/script>')}</script>";
+  gulp.src(bootstrapFontsPath)
+  .pipe(gulp.dest('./build/js/vendor/bootstrap/dist/fonts'));
+  gulp.src(bootstrapJSPath)
+  .pipe(gulp.dest('./build/js/vendor/bootstrap/dist/js'));
+  gulp.src(bootstrapCSSPath)
+  .pipe(gulp.dest('./build/js/vendor/bootstrap/dist/css'));
+
+  data.splice(8, 0, bootstrapCSSCDN);
+  data.splice(data.length, 0, bootstrapJSCDN);
+  data.splice(data.length, 0, bootstrapJSLocalFallback);
+  data.splice(data.length, 0, bootstrapCSSLocalFallback);
+}
+
 function findKeyText(data, txt) {
   for (var i = 0; i < data.length; i++) {
     if(data[i].indexOf(txt) > -1) {
@@ -107,23 +127,7 @@ gulp.task('setup-src', function() {
 
   if(bowerDirectory) {
     if(fs.existsSync(bootstrapJSPath) && !findKeyText(data, 'bootstrap.min.css')) {
-      bootstrapExist = true;
-      setupJquery(data);
-      var bootstrapCSSCDN = '    link(href="https://maxcdn.bootstrapcdn.com/bootstrap/{{BOOTSTRAP_VERSION}}/css/bootstrap.min.css", rel="stylesheet", integrity="{{BOOTSTRAP_SRI_HASH}}", crossorigin="anonymous")';
-      var bootstrapCSSLocalFallback = '  div(id="bootstrapCssTest" class="hidden")\n' + "  <script>$(function(){if ($('#bootstrapCssTest').is(':visible')){$('head').prepend('<link rel=" + '"stylesheet" href="/js/vendor/bootstrap/dist/css/bootstrap.min.css">' + "');}});</script>";
-      var bootstrapJSCDN = '  script(src="https://maxcdn.bootstrapcdn.com/bootstrap/{{BOOTSTRAP_VERSION}}/js/bootstrap.min.js", integrity="{{BOOTSTRAP_SRI_HASH}}", crossorigin="anonymous")';
-      var bootstrapJSLocalFallback = "  <script>if(typeof($.fn.modal) === 'undefined'" + ") {document.write('<script src=" + '"/js/vendor/bootstrap/dist/js/bootstrap.min.js"' + "><\\/script>')}</script>";
-      gulp.src(bootstrapFontsPath)
-      .pipe(gulp.dest('./build/js/vendor/bootstrap/dist/fonts'));
-      gulp.src(bootstrapJSPath)
-      .pipe(gulp.dest('./build/js/vendor/bootstrap/dist/js'));
-      gulp.src(bootstrapCSSPath)
-      .pipe(gulp.dest('./build/js/vendor/bootstrap/dist/css'));
-
-      data.splice(8, 0, bootstrapCSSCDN);
-      data.splice(data.length, 0, bootstrapJSCDN);
-      data.splice(data.length, 0, bootstrapJSLocalFallback);
-      data.splice(data.length, 0, bootstrapCSSLocalFallback);
+      setupBootstrap(data);
     }
 
     if(fs.existsSync(jqueryPath) && !bootstrapExist  && !findKeyText(data, 'jquery.min.js')) {
@@ -132,7 +136,7 @@ gulp.task('setup-src', function() {
   }
 
   if(!findKeyText(data, 'bundle.min.js')) {
-  data.splice(data.length, 0, '  script(src="js/bundle.min.js")');
+    data.splice(data.length, 0, '  script(src="js/bundle.min.js")');
   }
 
   var text = data.join("\n");
