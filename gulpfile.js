@@ -19,10 +19,10 @@ var jsVendorFiles      = [];             // Holds the js vendor files to be conc
 var myJsFiles          = ['js/*.js'];    // Holds the js files to be concatenated
 var fs                 = require('fs');  // ExistsSync var to check if font directory patch exist
 var bowerDirectory     = getBowerDirectory();
-var bootstrapJSPath    = "./" + bowerDirectory + "bootstrap/dist/js/bootstrap.min.js";
-var bootstrapCSSPath   = "./" + bowerDirectory + "bootstrap/dist/css/bootstrap.min.css";
-var bootstrapFontsPath = "./" + bowerDirectory + "bootstrap/dist/fonts/**.*";
-var jqueryPath         = "./" + bowerDirectory + "jquery/dist/jquery.min.js";
+var bootstrapJSPath    = bowerDirectory + "bootstrap/dist/js/bootstrap.min.js";
+var bootstrapCSSPath   = bowerDirectory + "bootstrap/dist/css/bootstrap.min.css";
+var bootstrapFontsPath = bowerDirectory + "bootstrap/dist/fonts/**.*";
+var jqueryPath         = bowerDirectory + "jquery/dist/jquery.min.js";
 var bootstrapExist     = false;
 var onError            = function(err) { // Custom error msg with beep sound and text color
     notify.onError({
