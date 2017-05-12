@@ -69,6 +69,8 @@ Finally, install `Gulp` required dependencies
 $ sudo npm install gulp-uglify browser-sync gulp-plumber gulp-autoprefixer gulp-sass gulp-pug gulp-imagemin gulp-cache gulp-clean-css gulp-sourcemaps gulp-concat beeper gulp-util gulp-rename gulp-notify --save-dev
 ```
 
+![get start demo gif](http://res.cloudinary.com/dt4qeehms/image/upload/v1494619106/boilerplate/gif1.gif)
+
 Optionally, if you want to add external components and libraries, initialize `Bower` and install the dependencies to be used in your next project (e.g.: jQuery, Bootstrap, Modernizer).
 
 ```bash
@@ -92,6 +94,8 @@ $ gulp watch
 ```
 
 This task will open the browser window usually with the URL http://localhost:3000/. Any saved changes made to the project files, will reload automatically the browser.
+
+![gulp task demo gif](http://res.cloudinary.com/dt4qeehms/image/upload/v1494619106/boilerplate/gif2.gif)
 
 ## Project Structure
 
