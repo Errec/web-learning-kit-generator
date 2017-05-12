@@ -126,7 +126,7 @@ The structure presented in this boilerplate is grouped primarily by folder conte
     ├── img/                    # Contains the compressed and optimized image files
     ├── css/                    # Contains the concatenated/minified .css files and .map files
     ├── js/                     # Contains the concatenated/minified/uglyfied .js files and .map files
-    │   └── vendor/             # Store third part library
+    │   └── vendor/             # Store third party libraries
     └── index.html              # Minified html index file
 ```
 
