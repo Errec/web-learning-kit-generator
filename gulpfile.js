@@ -125,6 +125,14 @@ gulp.task('images', function() {
 gulp.task('setup-src', function() {
   var data = fs.readFileSync('./index.pug').toString().split("\n");
 
+  if(data[data.length - 1] === '') {
+    data.pop();
+  }
+
+  if(data[data.length - 1].indexOf('script(src="js/bundle.min.js")') > -1) {
+    data.pop();
+  }
+
   if(bowerDirectory) {
     if(fs.existsSync(bootstrapJSPath) && !findKeyText(data, 'bootstrap.min.css')) {
       setupBootstrap(data);

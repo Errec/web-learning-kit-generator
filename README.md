@@ -21,8 +21,8 @@ This project is based on a simple and fast workflow focused mainly on the front-
   * Live browser reloading with `BrowserSync`
   * Includes:
     * [`Normalize.css`](https://necolas.github.com/normalize.css/) for CSS normalizations and common bug fixes
-    * [`jQuery`](https://jquery.com/) via Bower installation
-    * [`Bootstrap`](http://getbootstrap.com/) via Bower installation
+    * [`jQuery`](https://jquery.com/) via CDN and Bower installation
+    * [`Bootstrap`](http://getbootstrap.com/) via CDN and Bower installation
     * [`html5shiv`](https://github.com/aFarkas/html5shiv) via CDN
     * [`Respond`](https://github.com/scottjehl/Respond) via CDN
     * [`gulpfile.js`](http://gulpjs.com/) with Gulp presets
