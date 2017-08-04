@@ -144,7 +144,7 @@ gulp.task('setup-src', function() {
   }
 
   if(!findKeyText(data, 'bundle.min.js')) {
-    data.splice(data.length, 0, '  script(src="js/bundle.min.js")');
+    data.splice(data.length, 0, '    script(src="js/bundle.min.js")');
   }
 
   var text = data.join("\n");
