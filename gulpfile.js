@@ -35,9 +35,12 @@ var onError            = function(err) { // Custom error msg with beep sound and
 };
 
 function getBowerDirectory() {
+  var bowerComponents = "./bower_components";
   if(fs.existsSync('.bowerrc')) {
     var bowerrc = JSON.parse(fs.readFileSync('.bowerrc').toString());
     return bowerrc.directory;
+  } else if (fs.existsSync(bowerComponents)) {
+    return bowerComponents + '/';
   } else {
     return '';
   }
