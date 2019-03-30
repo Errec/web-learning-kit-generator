@@ -85,15 +85,15 @@ function findKeyText(data, txt) {
 }
 
 gulp.task('styles', function() {
-  gulp.src('styles/*.scss')
+  gulp.src('styles/*.sass')
   .pipe(plumber({ errorHandler: onError }))
-  .pipe(sourcemaps.init())
+  //.pipe(sourcemaps.init())
   .pipe(sass({indentedSyntax: true}))
   .pipe(autoprefixer({
     browsers: ['last 5 versions'],
     cascade: false}))
   .pipe(cleanCSS())
-  .pipe(sourcemaps.write())
+  //.pipe(sourcemaps.write())
   .pipe(rename({ suffix: '.min'}))
   .pipe(gulp.dest('build/css'));
 });
@@ -108,10 +108,10 @@ gulp.task('templates', function() {
 gulp.task('scripts', function() {
   return gulp.src(myJsFiles.concat(jsVendorFiles))
   .pipe(plumber({ errorHandler: onError }))
-  .pipe(sourcemaps.init())
+  //.pipe(sourcemaps.init())
   .pipe(gconcat('bundle.js'))
   .pipe(uglify())
-  .pipe(sourcemaps.write())
+  //.pipe(sourcemaps.write())
   .pipe(rename({ suffix: '.min'}))
   .pipe(gulp.dest('build/js'));
 });
