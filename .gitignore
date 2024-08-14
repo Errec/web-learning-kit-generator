@@ -1,6 +1,7 @@
 node_modules/
 temp/
 *.gitignore
+.vscode
 
 # bower_components:
 js/vendor
