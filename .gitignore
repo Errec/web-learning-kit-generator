@@ -3,6 +3,7 @@ yarn-error.log
 yarn.lock
 package-lock.json
 npm-debug.log
+
 .DS_Store
 .env
 .env.local
@@ -37,4 +38,3 @@ Package Control.system-ca-bundle
 Package Control.cache/
 Package Control.ca-certs/
 bh_unicode_properties.cache
-
