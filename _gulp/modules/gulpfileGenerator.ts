@@ -11,7 +11,7 @@ function styleTask() {
   return src('src/${styleExt}/main.${styleExt}', { sourcemaps: true })
     .pipe(plumber())
     .pipe(sass({ indentedSyntax: ${choices.style === 'Sass'} }))
-    .pipe(autoprefixer('last 2 versions'))
+    .pipe(autoprefixer('last 5 versions'))
     .pipe(cssnano())
     .pipe(dest('dist/css', { sourcemaps: '.' }));
 }`,
