@@ -34,10 +34,6 @@ Before you begin, ensure you have the following installed on your system:
 
 ## Getting Started
 
-After [Node.js](https://nodejs.org/en/download/), [npm](https://docs.npmjs.com/getting-started/installing-node), [Gulp](https://github.com/gulpjs/gulp/blob/master/docs/getting-started.md) and [Bower](https://bower.io/#install-bower)(optional) installation, you can create a new project based on `pug-sass-boilerplate-starter-kit` by doing the following:
-
-## Installation
-
 ### 1 - Clone or download this repository
 
 ### 2 - Install dependencies:
