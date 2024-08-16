@@ -65,11 +65,7 @@ This will run the `gulp` command, which starts a local server and watches for fi
 To create a production-ready build:
 
 ```bash
-npm run build
-```
-or
-```bash
-yarn build
+gulp build
 ```
 
 This will generate optimized files in the `dist` directory.
