@@ -1,14 +1,10 @@
-<div style="display: flex; align-items: flex-start;">
-  <div style="flex: 1;">
-    <h1>Web Learning Kit Generator</h1>
-    <p>Web Learning Kit Generator is a tool designed for beginners who want to build static websites with minimal configuration. The application creates a Gulp build process dynamically based on the user's choice of markup language(HTML/Pug), stylesheet language(SASS/SCSS), and scripting language(Javascript/Typescript). It's an easy and fast way to get started with a more realistic development environment on your local machine, beyond online IDEs</p>
+# Web Learning Kit Generator
 
-    This project is based on a simple and fast workflow focused mainly on the front-end task. It gives a solid starting point for newcomers who wants a ready-to-deploy local environment setup. The sources used to build this project includes:
-  </div>
-  <div style="flex: 0 0 300px; margin-left: 20px;">
-    <img src="./_gulp/logo.png">
-  </div>
-</div>
+| Web Learning Kit Generator is a tool designed for beginners who want to build static websites with minimal configuration. The application creates a Gulp build process dynamically based on the user's choice of markup language (HTML/Pug), stylesheet language (SASS/SCSS), and scripting language (Javascript/Typescript). It's an easy and fast way to get started with a more realistic development environment on your local machine, beyond online IDEs. | ![Logo](./_gulp/logo.png) |
+|:---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:-------------------------:|
+
+
+This project is based on a simple and fast workflow focused mainly on the front-end task. It gives a solid starting point for newcomers who wants a ready-to-deploy local environment setup. The sources used to build this project includes:
 
   * [H5BP Project](https://github.com/h5bp/html5-boilerplate)
   * [React Redux Starter Kit](https://github.com/davezuko/react-redux-starter-kit)
