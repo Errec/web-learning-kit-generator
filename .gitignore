@@ -1,21 +1,31 @@
 node_modules/
+yarn-error.log
+yarn.lock
+package-lock.json
+npm-debug.log
+
+.DS_Store
+.env
+.env.local
+.env.development.local
+.env.test.local
+.env.production.local
+.pnp
+.pnp.js
+.pnp.cjs
+*.pnp.js
+*.pnp.cjs
+.cache/
+
+build/
 temp/
 *.gitignore
-
-# bower_components:
-js/vendor
+.vscode
 
 # cache files for sublime text
 *.tmlanguage.cache
 *.tmPreferences.cache
 *.stTheme.cache
-
-# workspace files are user-specific
-*.sublime-workspace
-
-# project files should be checked into the repository, unless a significant
-# proportion of contributors will probably not be using SublimeText
-*.sublime-project
 
 # sftp configuration file
 sftp-config.json
@@ -28,7 +38,3 @@ Package Control.system-ca-bundle
 Package Control.cache/
 Package Control.ca-certs/
 bh_unicode_properties.cache
-
-# Sublime-github package stores a github token in this file
-# https://packagecontrol.io/packages/sublime-github
-GitHub.sublime-settings
