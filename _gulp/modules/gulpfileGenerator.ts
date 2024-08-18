@@ -21,6 +21,7 @@ function scriptTask() {
   return src('src/ts/**/*.ts', { sourcemaps: true })
     .pipe(plumber())
     .pipe(typescript())
+    .pipe(concat('main.js'))
     .pipe(terser())
     .pipe(dest('dist/js', { sourcemaps: '.' }));
 }`
@@ -29,6 +30,7 @@ function scriptTask() {
   return src('src/js/**/*.js', { sourcemaps: true })
     .pipe(plumber())
     .pipe(babel({ presets: ['@babel/preset-env'] }))
+    .pipe(concat('main.js'))
     .pipe(terser())
     .pipe(dest('dist/js', { sourcemaps: '.' }));
 }`,
