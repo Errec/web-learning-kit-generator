@@ -55,7 +55,12 @@ yarn install
 To start the development server with live reloading:
 
 ```bash
-gulp
+yarn start
+```
+
+Or
+```bash
+npm start
 ```
 
 This will run the `gulp` command, which starts a local server and watches for file changes.
@@ -65,7 +70,12 @@ This will run the `gulp` command, which starts a local server and watches for fi
 To create a production-ready build:
 
 ```bash
-gulp build
+yarn build
+```
+
+Or
+```bash
+npm build
 ```
 
 This will generate optimized files in the `dist` directory.
