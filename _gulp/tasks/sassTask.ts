@@ -12,7 +12,7 @@ export function styleTask() {
   return src('src/sass/main.sass', { sourcemaps: true })
     .pipe(plumber())
     .pipe(sassCompiler({ indentedSyntax: true }))
-    .pipe(autoprefixer('last 2 versions'))
+    .pipe(autoprefixer('last 5 versions'))
     .pipe(cssnano())
     .pipe(sourcemaps.write('.'))
     .pipe(dest('dist/css'));
