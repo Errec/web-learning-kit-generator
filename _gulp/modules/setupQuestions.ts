@@ -10,7 +10,7 @@ export const questions = [
 ];
 
 export async function promptUser(): Promise<UserChoices> {
-  return await inquirer.prompt(questions);
+  return inquirer.prompt(questions);
 }
 
 export async function confirmProjectDeletion(): Promise<boolean> {

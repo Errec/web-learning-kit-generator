@@ -1,11 +1,15 @@
-import browserSync from 'browser-sync';
+import { create as createBrowserSync } from 'browser-sync';
 import { series, watch } from 'gulp';
 import { UserChoices } from '../types';
 
-const bs = browserSync.create();
+const bs = createBrowserSync();
 
 export function browserSyncServe(cb: () => void): void {
-  bs.init({ server: { baseDir: 'dist/' } });
+  bs.init({
+    server: { baseDir: 'dist/' },
+    open: false,
+    notify: false
+  });
   cb();
 }
 
@@ -17,7 +21,7 @@ export function browserSyncReload(cb: () => void): void {
 export function createWatchTask(choices: UserChoices, tasks: Record<string, () => void>) {
   const stylePath = `src/${choices.style === 'Sass' ? 'sass' : 'scss'}/**/*.${choices.style === 'Sass' ? 'sass' : 'scss'}`;
   const scriptPath = `src/${choices.script === 'TypeScript' ? 'ts' : 'js'}/**/*.${choices.script === 'TypeScript' ? 'ts' : 'js'}`;
-  const markupPath = `src/${choices.markup === 'Pug' ? 'templates/**/*.pug' : 'html/**/*.html'}`;
+  const markupPath = `src/${choices.markup === 'Pug' ? 'pug' : 'html'}/**/*.${choices.markup === 'Pug' ? 'pug' : 'html'}`;
   const imgPath = 'src/img/**/*';
 
   return function watchTask(): void {

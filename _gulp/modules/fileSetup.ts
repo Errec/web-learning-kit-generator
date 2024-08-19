@@ -1,4 +1,3 @@
-import path from 'path';
 import { UserChoices } from '../types';
 import { copyFile, createDirectory, writeFile } from '../utils/fileSystem';
 
@@ -6,8 +5,8 @@ export function createProjectStructure(choices: UserChoices): void {
   const dirs = [
     'src',
     `src/${choices.script === 'JavaScript' ? 'js' : 'ts'}`,
-    `src/${choices.style === 'Sass' ? 'sass' : 'scss'}/_base`,
-    `src/${choices.markup === 'HTML' ? 'html' : 'templates'}`,
+    `src/${choices.style === 'Sass' ? 'sass/base' : 'scss/base'}`,  // Updated path for base
+    `src/${choices.markup === 'HTML' ? 'html' : 'pug'}`,
     'src/img',
     'dist/css'
   ];
@@ -24,13 +23,13 @@ export function createProjectFiles(choices: UserChoices): void {
     : 'console.log("Hello, TypeScript!");';
   writeFile(`src/${scriptExt}/main.${scriptExt}`, scriptContent);
 
-  let styleContent = `/* Main ${choices.style} file */`;
-  if (choices.addNormalize) styleContent = `@import '_base/normalize'${choices.style === 'Sass' ? '' : ';'}\n${styleContent}`;
-  if (choices.addReset) styleContent = `@import '_base/reset'${choices.style === 'Sass' ? '' : ';'}\n${styleContent}`;
+  let styleContent = `// Main ${choices.style} file\n`;
+  if (choices.addNormalize) styleContent += choices.style === 'Sass' ? "@import 'base/normalize'\n" : "@import 'base/normalize';\n";
+  if (choices.addReset) styleContent += choices.style === 'Sass' ? "@import 'base/reset'\n" : "@import 'base/reset';\n";
   writeFile(`src/${styleExt}/main.${styleExt}`, styleContent);
 
   const markupContent = choices.markup === 'HTML' ? getHtmlTemplate() : getPugTemplate();
-  const markupFilePath = choices.markup === 'HTML' ? 'src/html/index.html' : 'src/templates/index.pug';
+  const markupFilePath = choices.markup === 'HTML' ? 'src/html/index.html' : 'src/pug/index.pug';
 
   writeFile(markupFilePath, markupContent);
   writeFile('src/favicon.ico', '');
@@ -38,13 +37,13 @@ export function createProjectFiles(choices: UserChoices): void {
 
 export function copyVendorCSS(choices: UserChoices): void {
   const vendorFiles = [
-    { type: 'Normalize', src: '_gulp/vendors/normalize.css' },
-    { type: 'Reset', src: '_gulp/vendors/reset.css' }
+    { type: 'Normalize', src: `_gulp/vendors/normalize.${choices.style === 'Sass' ? 'sass' : 'scss'}` },
+    { type: 'Reset', src: `_gulp/vendors/reset.${choices.style === 'Sass' ? 'sass' : 'scss'}` }
   ];
 
   vendorFiles.forEach(file => {
     if (choices[`add${file.type}` as keyof UserChoices]) {
-      const dest = `src/${choices.style === 'Sass' ? 'sass' : 'scss'}/_base/${file.type.toLowerCase()}.css`;
+      const dest = `src/${choices.style === 'Sass' ? 'sass/base' : 'scss/base'}/_${file.type.toLowerCase()}.${choices.style === 'Sass' ? 'sass' : 'scss'}`;  // Save in base folder
       copyFile(file.src, dest);
     }
   });

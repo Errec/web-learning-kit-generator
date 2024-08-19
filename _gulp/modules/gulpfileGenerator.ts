@@ -1,136 +1,100 @@
-import { GulpTasks, UserChoices } from '../types';
+import { UserChoices } from '../types';
 import { writeFile } from '../utils/fileSystem';
 
-function getGulpTasks(choices: UserChoices): GulpTasks {
-  const styleExt = choices.style === 'Sass' ? 'sass' : 'scss';
-  const scriptExt = choices.script === 'TypeScript' ? 'ts' : 'js';
-
-  return {
-    styleTask: `
-function styleTask() {
-  return src('src/${styleExt}/main.${styleExt}', { sourcemaps: true })
-    .pipe(plumber())
-    .pipe(sass({ indentedSyntax: ${choices.style === 'Sass'} }))
-    .pipe(autoprefixer('last 5 versions'))
-    .pipe(cssnano())
-    .pipe(dest('dist/css', { sourcemaps: '.' }));
-}`,
-    scriptTask: choices.script === 'TypeScript' 
-      ? `
-function scriptTask() {
-  return src('src/ts/**/*.ts', { sourcemaps: true })
-    .pipe(plumber())
-    .pipe(typescript())
-    .pipe(concat('main.js'))
-    .pipe(terser())
-    .pipe(dest('dist/js', { sourcemaps: '.' }));
-}`
-      : `
-function scriptTask() {
-  return src('src/js/**/*.js', { sourcemaps: true })
-    .pipe(plumber())
-    .pipe(babel({ presets: ['@babel/preset-env'] }))
-    .pipe(concat('main.js'))
-    .pipe(terser())
-    .pipe(dest('dist/js', { sourcemaps: '.' }));
-}`,
-    markupTask: choices.markup === 'Pug' 
-      ? `
-function pugTask() {
-  return src('src/templates/*.pug')
-    .pipe(plumber())
-    .pipe(pug())
-    .pipe(dest('dist'));
-}`
-      : `
-function htmlTask() {
-  return src('src/html/*.html')
-    .pipe(plumber())
-    .pipe(dest('dist'));
-}`
-  };
-}
-
 export function generateGulpfile(choices: UserChoices): void {
-  const tasks = getGulpTasks(choices);
-
-  const pugImport = choices.markup === 'Pug'
-    ? "const pug = require('gulp-pug');" : '';
-  const tsImport = choices.script === 'TypeScript'
-    ? "const typescript = require('gulp-typescript');" : '';
-
   const gulpfileContent = `
 const { src, dest, watch, series, parallel } = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 const autoprefixer = require('gulp-autoprefixer');
-const cssnano = require('gulp-cssnano');
+const cleanCSS = require('gulp-clean-css');
 const babel = require('gulp-babel');
-const concat = require('gulp-concat');
 const terser = require('gulp-terser');
 const browserSync = require('browser-sync').create();
 const imagemin = require('gulp-imagemin');
-const cache = require('gulp-cache');
-const del = require('del');
+const rimraf = require('rimraf');  // Correct import of rimraf as a function
 const plumber = require('gulp-plumber');
 const sourcemaps = require('gulp-sourcemaps');
-${pugImport}
-${tsImport}
+const gulpif = require('gulp-if');
+const pug = ${choices.markup === 'Pug' ? "require('gulp-pug')" : 'null'};
+const typescript = ${choices.script === 'TypeScript' ? "require('gulp-typescript')" : 'null'};
 
-${tasks.styleTask}
-${tasks.scriptTask}
-${tasks.markupTask}
+const production = process.env.NODE_ENV === 'production';
 
-function imagesTask() {
+function clean(cb) {
+  rimraf('dist', cb);  // Correct usage of rimraf as a function
+}
+
+function styles() {
+  return src('src/${choices.style.toLowerCase()}/**/*.${choices.style.toLowerCase()}')
+    .pipe(plumber())
+    .pipe(gulpif(!production, sourcemaps.init()))
+    .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
+    .pipe(autoprefixer())
+    .pipe(cleanCSS())
+    .pipe(gulpif(!production, sourcemaps.write('.')))
+    .pipe(dest('dist/css'))
+    .pipe(browserSync.stream());
+}
+
+function scripts() {
+  return src('src/${choices.script === 'TypeScript' ? 'ts' : 'js'}/**/*.${choices.script === 'TypeScript' ? 'ts' : 'js'}')
+    .pipe(plumber())
+    .pipe(gulpif(!production, sourcemaps.init()))
+    ${choices.script === 'TypeScript' 
+      ? '.pipe(typescript())'
+      : '.pipe(babel({ presets: ["@babel/preset-env"] }))'
+    }
+    .pipe(terser())
+    .pipe(gulpif(!production, sourcemaps.write('.')))
+    .pipe(dest('dist/js'));
+}
+
+function markup() {
+  return src('src/${choices.markup === 'Pug' ? 'pug' : 'html'}/**/*.${choices.markup === 'Pug' ? 'pug' : 'html'}')
+    .pipe(plumber())
+    ${choices.markup === 'Pug' ? '.pipe(pug())' : ''}
+    .pipe(dest('dist'));
+}
+
+function images() {
   return src('src/img/**/*')
-    .pipe(cache(imagemin()))
+    .pipe(imagemin())
     .pipe(dest('dist/img'));
 }
 
-function browserSyncServe(cb) {
-  browserSync.init({ server: { baseDir: 'dist/' } });
+function serve(cb) {
+  browserSync.init({
+    server: {
+      baseDir: './dist'
+    },
+    open: true
+  });
   cb();
 }
 
-function browserSyncReload(cb) {
+function watchFiles(cb) {
+  watch('src/${choices.style.toLowerCase()}/**/*.${choices.style.toLowerCase()}', styles);
+  watch('src/${choices.script === 'TypeScript' ? 'ts' : 'js'}/**/*.${choices.script === 'TypeScript' ? 'ts' : 'js'}', series(scripts, reload));
+  watch('src/${choices.markup === 'Pug' ? 'pug' : 'html'}/**/*.${choices.markup === 'Pug' ? 'pug' : 'html'}', series(markup, reload));
+  watch('src/img/**/*', series(images, reload));
+  cb();
+}
+
+function reload(cb) {
   browserSync.reload();
   cb();
 }
 
-function watchTask() {
-  watch('src/${choices.style === 'Sass' ? 'sass' : 'scss'}/**/*.${choices.style === 'Sass' ? 'sass' : 'scss'}',
-    series(styleTask, browserSyncReload));
-  watch('src/${choices.script === 'TypeScript' ? 'ts' : 'js'}/**/*.${choices.script === 'TypeScript' ? 'ts' : 'js'}',
-    series(scriptTask, browserSyncReload));
-  watch('src/${choices.markup === 'Pug' ? 'templates/**/*.pug' : 'html/**/*.html'}',
-    series(${choices.markup === 'Pug' ? 'pugTask' : 'htmlTask'}, browserSyncReload));
-  watch('src/img/**/*', series(imagesTask, browserSyncReload));
-}
+exports.clean = clean;
+exports.styles = styles;
+exports.scripts = scripts;
+exports.markup = markup;
+exports.images = images;
+exports.watch = watchFiles;
 
-function clean() {
-  return del(['dist']);
-}
-
-exports.default = series(
-  clean,
-  parallel(
-    styleTask,
-    scriptTask,
-    ${choices.markup === 'Pug' ? 'pugTask' : 'htmlTask'},
-    imagesTask
-  ),
-  browserSyncServe,
-  watchTask
-);
-
-exports.build = series(
-  clean,
-  parallel(
-    styleTask,
-    scriptTask,
-    ${choices.markup === 'Pug' ? 'pugTask' : 'htmlTask'},
-    imagesTask
-  )
-);`;
+exports.build = series(clean, parallel(styles, scripts, markup, images));
+exports.default = series(clean, parallel(styles, scripts, markup, images), serve, watchFiles);
+`;
 
   writeFile('gulpfile.js', gulpfileContent);
 }
