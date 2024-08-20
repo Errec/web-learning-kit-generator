@@ -1,5 +1,5 @@
 {
-  "script": "JavaScript",
+  "script": "TypeScript",
   "style": "Sass",
   "markup": "Pug",
   "addNormalize": true,

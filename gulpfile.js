@@ -1,8 +1,4 @@
-import { UserChoices } from '../types';
-import { writeFile } from '../utils/fileSystem';
 
-export function generateGulpfile(choices: UserChoices): void {
-  const gulpfileContent = `
 const { src, dest, watch, series, parallel } = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 const autoprefixer = require('gulp-autoprefixer');
@@ -19,9 +15,9 @@ const del = require('del');
 const plumber = require('gulp-plumber');
 const sourcemaps = require('gulp-sourcemaps');
 const gulpif = require('gulp-if');
-const pug = ${choices.markup === 'Pug' ? "require('gulp-pug')" : 'null'};
-const typescript = ${choices.script === 'TypeScript' ? "require('gulp-typescript')" : 'null'};
-const tsify = ${choices.script === 'TypeScript' ? "require('tsify')" : 'null'};
+const pug = require('gulp-pug');
+const typescript = require('gulp-typescript');
+const tsify = require('tsify');
 
 const production = process.env.NODE_ENV === 'production';
 
@@ -30,7 +26,7 @@ async function clean() {
 }
 
 function styles() {
-  return src('src/${choices.style.toLowerCase()}/**/*.${choices.style.toLowerCase()}')
+  return src('src/sass/**/*.sass')
     .pipe(plumber())
     .pipe(gulpif(!production, sourcemaps.init()))
     .pipe(sass({ outputStyle: 'compressed' }).on('error', sass.logError))
@@ -43,7 +39,7 @@ function styles() {
 
 function scripts() {
   const b = browserify({
-    entries: 'src/${choices.script === 'TypeScript' ? 'ts' : 'js'}/main.${choices.script === 'TypeScript' ? 'ts' : 'js'}',
+    entries: 'src/ts/main.ts',
     debug: !production,
   })
   .transform(babelify, {
@@ -51,7 +47,7 @@ function scripts() {
     extensions: ['.js', '.ts']
   });
 
-  ${choices.script === 'TypeScript' ? 'b.plugin(tsify);' : ''}
+  b.plugin(tsify);
 
   return b.bundle()
     .pipe(source('main.js'))
@@ -65,9 +61,9 @@ function scripts() {
 }
 
 function markup() {
-  return src('src/${choices.markup === 'Pug' ? 'pug' : 'html'}/**/*.${choices.markup === 'Pug' ? 'pug' : 'html'}')
+  return src('src/pug/**/*.pug')
     .pipe(plumber())
-    ${choices.markup === 'Pug' ? '.pipe(pug())' : ''}
+    .pipe(pug())
     .pipe(dest('dist'));
 }
 
@@ -88,9 +84,9 @@ function serve(cb) {
 }
 
 function watchFiles(cb) {
-  watch('src/${choices.style.toLowerCase()}/**/*.${choices.style.toLowerCase()}', styles);
-  watch('src/${choices.script === 'TypeScript' ? 'ts' : 'js'}/**/*.${choices.script === 'TypeScript' ? 'ts' : 'js'}', series(scripts, reload));
-  watch('src/${choices.markup === 'Pug' ? 'pug' : 'html'}/**/*.${choices.markup === 'Pug' ? 'pug' : 'html'}', series(markup, reload));
+  watch('src/sass/**/*.sass', styles);
+  watch('src/ts/**/*.ts', series(scripts, reload));
+  watch('src/pug/**/*.pug', series(markup, reload));
   watch('src/img/**/*', series(images, reload));
   cb();
 }
@@ -109,7 +105,3 @@ exports.watch = watchFiles;
 
 exports.build = series(clean, parallel(styles, scripts, markup, images));
 exports.default = series(clean, parallel(styles, scripts, markup, images), serve, watchFiles);
-`;
-
-  writeFile('gulpfile.js', gulpfileContent);
-}

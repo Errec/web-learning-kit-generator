@@ -1,11 +1,14 @@
-import { parallel, series } from 'gulp';
+import { readFile, writeFile } from 'fs/promises';
+import { parallel, series, TaskFunction } from 'gulp';
 import { browserSyncServe, createWatchTask } from './modules/buildEnvironment';
+import { copyVendorCSS, createProjectFiles, createProjectStructure } from './modules/fileSetup';
+import { confirmProjectDeletion, promptUser } from './modules/setupQuestions';
 import { UserChoices } from './types';
+import { deleteDirectory, fileExists } from './utils/fileSystem';
 import { logger } from './utils/logger';
 
 async function loadUserChoices(): Promise<UserChoices> {
   try {
-    const { readFile } = await import('fs/promises');
     const data = await readFile('_gulp/user-choices.json', 'utf8');
     return JSON.parse(data);
   } catch (error) {
@@ -25,33 +28,37 @@ async function createGulpTasks() {
     const { cleanTask } = await import('./tasks/cleanTask');
 
     const watchTask = createWatchTask(choices, {
-      styleTask: styleTask(choices),
-      scriptTask: scriptTask(choices),
-      markupTask: markupTask(choices),
-      imagesTask
+      styleTask: styleTask(choices) as TaskFunction,
+      scriptTask: scriptTask(choices) as TaskFunction,
+      markupTask: markupTask(choices) as TaskFunction,
+      imagesTask: imagesTask() as TaskFunction
     });
 
-    const defaultTask = series(
-      cleanTask,
-      parallel(
-        styleTask(choices),
-        scriptTask(choices),
-        markupTask(choices),
-        imagesTask
-      ),
-      browserSyncServe,
-      watchTask
-    );
+    const defaultTask: TaskFunction = (done) => {
+      return series(
+        cleanTask(),
+        parallel(
+          styleTask(choices),
+          scriptTask(choices),
+          markupTask(choices),
+          imagesTask()
+        ),
+        browserSyncServe,
+        watchTask
+      )(done);
+    };
 
-    const buildTask = series(
-      cleanTask,
-      parallel(
-        styleTask(choices),
-        scriptTask(choices),
-        markupTask(choices),
-        imagesTask
-      )
-    );
+    const buildTask: TaskFunction = (done) => {
+      return series(
+        cleanTask(),
+        parallel(
+          styleTask(choices),
+          scriptTask(choices),
+          markupTask(choices),
+          imagesTask()
+        )
+      )(done);
+    };
 
     return { defaultTask, buildTask };
   } catch (error) {
@@ -60,34 +67,44 @@ async function createGulpTasks() {
   }
 }
 
-export async function run() {
+export async function setup(): Promise<void> {
   try {
-    const { defaultTask, buildTask } = await createGulpTasks();
-
-    if (process.argv.includes('build')) {
-      buildTask((err?: Error | null) => {
-        if (err) {
-          logger.error(`Build failed: ${err.message}`);
-        } else {
-          logger.success('Build completed successfully');
-        }
-      });
-    } else {
-      defaultTask((err?: Error | null) => {
-        if (err) {
-          logger.error(`Development server failed: ${err.message}`);
-        } else {
-          logger.success('Development server started');
-        }
-      });
+    const projectExists = fileExists('src') || fileExists('dist');
+    if (projectExists) {
+      const shouldDelete = await confirmProjectDeletion();
+      if (!shouldDelete) {
+        logger.info('Project setup canceled. Exiting...');
+        return;
+      }
+      deleteDirectory('src');
+      deleteDirectory('dist');
     }
-  } catch (error) {
-    logger.error(`An error occurred during execution: ${(error as Error).message}`);
-    process.exit(1);
+
+    const choices: UserChoices = await promptUser();
+    
+    await writeFile('_gulp/user-choices.json', JSON.stringify(choices, null, 2));
+
+    createProjectStructure(choices);
+    createProjectFiles(choices);
+    copyVendorCSS(choices);
+
+    logger.success('Setup complete. Gulpfile has been generated.');
+    logger.info('Starting development server...');
+
+    const { defaultTask } = await createGulpTasks();
+    defaultTask((err?: Error | null) => {
+      if (err) {
+        logger.error(`Development server failed: ${err.message}`);
+      } else {
+        logger.success('Development server started');
+      }
+    });
+  } catch (error: unknown) {
+    logger.error(`An error occurred during setup: ${(error as Error).message}`);
   }
 }
 
-run().catch(error => {
+setup().catch(error => {
   logger.error(`An error occurred: ${(error as Error).message}`);
   process.exit(1);
 });

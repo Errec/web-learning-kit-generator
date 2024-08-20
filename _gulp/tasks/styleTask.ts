@@ -1,6 +1,6 @@
-import { dest, src } from 'gulp';
+import { dest, src, TaskFunction } from 'gulp';
 import autoprefixer from 'gulp-autoprefixer';
-import cssnano from 'gulp-cssnano';
+import cleanCSS from 'gulp-clean-css';
 import plumber from 'gulp-plumber';
 import gulpSass from 'gulp-sass';
 import sourcemaps from 'gulp-sourcemaps';
@@ -9,13 +9,13 @@ import { UserChoices } from '../types';
 
 const sassCompiler = gulpSass(sass);
 
-export function styleTask(choices: UserChoices) {
-  return function () {
+export function styleTask(choices: UserChoices): TaskFunction {
+  return function() {
     return src(`src/${choices.style.toLowerCase()}/**/*.${choices.style.toLowerCase()}`, { sourcemaps: true })
       .pipe(plumber())
       .pipe(sassCompiler({ indentedSyntax: choices.style === 'Sass' }))
       .pipe(autoprefixer())
-      .pipe(cssnano())
+      .pipe(cleanCSS())
       .pipe(sourcemaps.write('.'))
       .pipe(dest('dist/css'));
   };

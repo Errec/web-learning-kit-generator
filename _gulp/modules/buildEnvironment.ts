@@ -1,5 +1,5 @@
 import { create as createBrowserSync } from 'browser-sync';
-import { series, watch } from 'gulp';
+import { series, TaskFunction, watch } from 'gulp';
 import { UserChoices } from '../types';
 
 const bs = createBrowserSync();
@@ -18,13 +18,20 @@ export function browserSyncReload(cb: () => void): void {
   cb();
 }
 
-export function createWatchTask(choices: UserChoices, tasks: Record<string, () => void>) {
-  const stylePath = `src/${choices.style === 'Sass' ? 'sass' : 'scss'}/**/*.${choices.style === 'Sass' ? 'sass' : 'scss'}`;
-  const scriptPath = `src/${choices.script === 'TypeScript' ? 'ts' : 'js'}/**/*.${choices.script === 'TypeScript' ? 'ts' : 'js'}`;
-  const markupPath = `src/${choices.markup === 'Pug' ? 'pug' : 'html'}/**/*.${choices.markup === 'Pug' ? 'pug' : 'html'}`;
-  const imgPath = 'src/img/**/*';
+interface Tasks {
+  styleTask: TaskFunction;
+  scriptTask: TaskFunction;
+  markupTask: TaskFunction;
+  imagesTask: TaskFunction;
+}
 
+export function createWatchTask(choices: UserChoices, tasks: Tasks) {
   return function watchTask(): void {
+    const stylePath = `src/${choices.style === 'Sass' ? 'sass' : 'scss'}/**/*.${choices.style === 'Sass' ? 'sass' : 'scss'}`;
+    const scriptPath = `src/${choices.script === 'TypeScript' ? 'ts' : 'js'}/**/*.${choices.script === 'TypeScript' ? 'ts' : 'js'}`;
+    const markupPath = `src/${choices.markup === 'Pug' ? 'pug' : 'html'}/**/*.${choices.markup === 'Pug' ? 'pug' : 'html'}`;
+    const imgPath = 'src/img/**/*';
+
     watch(stylePath, series(tasks.styleTask, browserSyncReload));
     watch(scriptPath, series(tasks.scriptTask, browserSyncReload));
     watch(markupPath, series(tasks.markupTask, browserSyncReload));
