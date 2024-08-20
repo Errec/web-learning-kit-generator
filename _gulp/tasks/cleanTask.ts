@@ -1,5 +1,7 @@
 import del from 'del';
 
 export function cleanTask() {
-  return del(['dist']);
+  return function(cb: (error?: Error | null) => void) {
+    del(['dist']).then(() => cb()).catch(cb);
+  };
 }

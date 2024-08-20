@@ -1,7 +1,7 @@
 {
   "script": "TypeScript",
-  "style": "SCSS",
-  "markup": "HTML",
+  "style": "Sass",
+  "markup": "Pug",
   "addNormalize": true,
   "addReset": true
 }

@@ -2,13 +2,42 @@
   "compilerOptions": {
     "target": "ES2018",
     "module": "commonjs",
+    "lib": ["es2018", "dom"],
+    "declaration": true,
+    "declarationMap": true,
+    "sourceMap": true,
     "outDir": "./dist",
     "rootDir": "./",
     "strict": true,
+    "noImplicitAny": true,
+    "strictNullChecks": true,
+    "strictFunctionTypes": true,
+    "strictBindCallApply": true,
+    "strictPropertyInitialization": true,
+    "noImplicitThis": true,
+    "alwaysStrict": true,
+    "noUnusedLocals": true,
+    "noUnusedParameters": true,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "moduleResolution": "node",
+    "baseUrl": "./",
+    "paths": {
+      "*": ["node_modules/*", "_gulp/types/*", "./typings"]
+    },
     "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true
+    "experimentalDecorators": true,
+    "emitDecoratorMetadata": true,
+    "forceConsistentCasingInFileNames": true,
+    "types": ["node", "gulp", "gulp-imagemin", "browserify", "gulp-rename", "gulp-uglify", "vinyl-buffer", "vinyl-source-stream"],
+    "typeRoots": ["node_modules/@types", "_gulp/types", "./typings"]
   },
-  "include": ["_gulp/**/*"],
-  "exclude": ["node_modules", "**/*.spec.ts"]
+  "include": [
+    "_gulp/**/*",
+    "_gulp/types/custom.d.ts"
+  ],
+  "exclude": [
+    "node_modules",
+    "**/*.spec.ts"
+  ]
 }

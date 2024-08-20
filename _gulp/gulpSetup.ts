@@ -22,7 +22,6 @@ async function setup(): Promise<void> {
 
     const choices: UserChoices = await promptUser();
     
-    // Save user choices for later use
     await writeFile('_gulp/user-choices.json', JSON.stringify(choices, null, 2));
 
     createProjectStructure(choices);
@@ -30,18 +29,22 @@ async function setup(): Promise<void> {
     copyVendorCSS(choices);
     generateGulpfile(choices);
 
-    logger.success('Setup complete.');
-      logger.info('Starting live server...');
+    logger.success('Setup complete. Gulpfile has been generated.');
+    logger.info('Starting development server...');
 
-      exec('gulp', (err, stdout, stderr) => {
-        if (err) {
-          logger.error(`Error starting live server: ${err.message}`);
-          return;
-        }
-        console.log(stdout);
-      });
+    exec('yarn start', (error, stdout, stderr) => {
+      if (error) {
+        logger.error(`Error: ${error.message}`);
+        return;
+      }
+      if (stderr) {
+        logger.error(`Stderr: ${stderr}`);
+        return;
+      }
+      console.log(stdout);
+    });
   } catch (error: unknown) {
-    logger.error(`An error occurred during setup: ${(<Error>error).message}`);
+    logger.error(`An error occurred during setup: ${(error as Error).message}`);
   }
 }
 
