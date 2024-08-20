@@ -11,7 +11,7 @@ function styleTask() {
   return src('src/${styleExt}/main.${styleExt}', { sourcemaps: true })
     .pipe(plumber())
     .pipe(sass({ indentedSyntax: ${choices.style === 'Sass'} }))
-    .pipe(autoprefixer('last 2 versions'))
+    .pipe(autoprefixer('last 5 versions'))
     .pipe(cssnano())
     .pipe(dest('dist/css', { sourcemaps: '.' }));
 }`,
@@ -21,6 +21,7 @@ function scriptTask() {
   return src('src/ts/**/*.ts', { sourcemaps: true })
     .pipe(plumber())
     .pipe(typescript())
+    .pipe(concat('main.js'))
     .pipe(terser())
     .pipe(dest('dist/js', { sourcemaps: '.' }));
 }`
@@ -29,6 +30,7 @@ function scriptTask() {
   return src('src/js/**/*.js', { sourcemaps: true })
     .pipe(plumber())
     .pipe(babel({ presets: ['@babel/preset-env'] }))
+    .pipe(concat('main.js'))
     .pipe(terser())
     .pipe(dest('dist/js', { sourcemaps: '.' }));
 }`,
@@ -63,6 +65,7 @@ const sass = require('gulp-sass')(require('sass'));
 const autoprefixer = require('gulp-autoprefixer');
 const cssnano = require('gulp-cssnano');
 const babel = require('gulp-babel');
+const concat = require('gulp-concat');
 const terser = require('gulp-terser');
 const browserSync = require('browser-sync').create();
 const imagemin = require('gulp-imagemin');

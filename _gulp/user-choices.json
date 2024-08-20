@@ -1,0 +1,7 @@
+{
+  "script": "TypeScript",
+  "style": "SCSS",
+  "markup": "HTML",
+  "addNormalize": true,
+  "addReset": true
+}
