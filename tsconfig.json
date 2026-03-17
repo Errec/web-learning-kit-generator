@@ -2,7 +2,10 @@
   "compilerOptions": {
     "target": "ES2018",
     "module": "commonjs",
-    "lib": ["es2018", "dom"],
+    "lib": [
+      "es2018",
+      "dom"
+    ],
     "declaration": true,
     "declarationMap": true,
     "sourceMap": true,
@@ -23,14 +26,29 @@
     "moduleResolution": "node",
     "baseUrl": "./",
     "paths": {
-      "*": ["node_modules/*", "_gulp/types/*", "./typings"]
+      "*": [
+        "node_modules/*",
+        "_gulp/types/*",
+        "./typings"
+      ]
     },
     "esModuleInterop": true,
-    "experimentalDecorators": true,
-    "emitDecoratorMetadata": true,
     "forceConsistentCasingInFileNames": true,
-    "types": ["node", "gulp", "gulp-imagemin", "browserify", "gulp-rename", "gulp-uglify", "vinyl-buffer", "vinyl-source-stream"],
-    "typeRoots": ["node_modules/@types", "_gulp/types", "./typings"]
+    "types": [
+      "node",
+      "gulp",
+      "gulp-imagemin",
+      "browserify",
+      "gulp-rename",
+      "gulp-uglify",
+      "vinyl-buffer",
+      "vinyl-source-stream"
+    ],
+    "typeRoots": [
+      "node_modules/@types",
+      "_gulp/types",
+      "./typings"
+    ]
   },
   "include": [
     "_gulp/**/*",
