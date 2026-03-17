@@ -51,6 +51,12 @@ Build for production:
 npm run build
 ```
 
+Non-interactive setup (for automation):
+
+```bash
+npm run init -- --script ts --style scss --markup pug --normalize --reset
+```
+
 Quality checks:
 
 ```bash

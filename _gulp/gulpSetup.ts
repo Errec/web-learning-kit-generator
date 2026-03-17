@@ -3,6 +3,7 @@ import { writeFile } from 'fs/promises';
 import { copyVendorCSS, createProjectFiles, createProjectStructure } from './modules/fileSetup';
 import { generateGulpfile } from './modules/gulpfileGenerator';
 import { confirmProjectDeletion, promptUser } from './modules/setupQuestions';
+import { parseSetupOptions } from './modules/setupCliOptions';
 import { assertUserChoices } from './modules/userChoicesValidation';
 import { UserChoices } from './types';
 import { deleteDirectory, fileExists } from './utils/fileSystem';
@@ -21,7 +22,8 @@ async function setup(): Promise<void> {
       deleteDirectory('dist');
     }
 
-    const rawChoices = await promptUser();
+    const parsedOptions = parseSetupOptions(process.argv.slice(2));
+    const rawChoices = parsedOptions.shouldPrompt ? await promptUser() : parsedOptions.choices;
     const choices: UserChoices = assertUserChoices(rawChoices);
     
     await writeFile('_gulp/user-choices.json', JSON.stringify(choices, null, 2));
