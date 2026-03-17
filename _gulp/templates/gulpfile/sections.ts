@@ -86,7 +86,7 @@ export function imagesSection(): string {
 }`;
 }
 
-export function devServerSection({ styleFolder, styleExtension, scriptFolder, scriptExtension, markupFolder, markupExtension }: GulpTemplateContext): string {
+export function devServerSection({ styleGlob, scriptGlob, markupGlob, imageGlob }: GulpTemplateContext): string {
   return `function serve(cb) {
   browserSync.init({
     server: {
@@ -98,10 +98,10 @@ export function devServerSection({ styleFolder, styleExtension, scriptFolder, sc
 }
 
 function watchFiles(cb) {
-  watch('src/${styleFolder}/**/*.${styleExtension}', styles);
-  watch('src/${scriptFolder}/**/*.${scriptExtension}', series(scripts, reload));
-  watch('src/${markupFolder}/**/*.${markupExtension}', series(markup, reload));
-  watch('src/img/**/*', series(images, reload));
+  watch('${styleGlob}', styles);
+  watch('${scriptGlob}', series(scripts, reload));
+  watch('${markupGlob}', series(markup, reload));
+  watch('${imageGlob}', series(images, reload));
   cb();
 }
 
