@@ -1,6 +1,9 @@
 import { GulpTemplateContext } from './types';
 
 export function importsSection({ choices }: GulpTemplateContext): string {
+  const pugImport = choices.markup === 'Pug' ? "const pug = require('gulp-pug');\n" : '';
+  const tsifyImport = choices.script === 'TypeScript' ? "const tsify = require('tsify');\n" : '';
+
   return `const { src, dest, watch, series, parallel } = require('gulp');
 const sass = require('gulp-sass')(require('sass'));
 const autoprefixer = require('gulp-autoprefixer');
@@ -17,10 +20,9 @@ const del = require('del');
 const plumber = require('gulp-plumber');
 const sourcemaps = require('gulp-sourcemaps');
 const gulpif = require('gulp-if');
-const pug = ${choices.markup === 'Pug' ? "require('gulp-pug')" : 'null'};
-const tsify = ${choices.script === 'TypeScript' ? "require('tsify')" : 'null'};
-
-const production = process.env.NODE_ENV === 'production';`;
+${pugImport}${tsifyImport}const production = process.env.NODE_ENV === 'production';
+const openBrowser = process.env.BROWSERSYNC_OPEN === 'true';
+const skipImageOptimization = process.env.SKIP_IMAGE_OPTIMIZATION === 'true';`;
 }
 
 export function cleanSection(): string {
@@ -81,7 +83,7 @@ export function markupSection({ choices, markupFolder, markupExtension }: GulpTe
 export function imagesSection(): string {
   return `function images() {
   return src('src/img/**/*')
-    .pipe(imagemin())
+    .pipe(gulpif(!skipImageOptimization, imagemin()))
     .pipe(dest('dist/img'));
 }`;
 }
@@ -92,7 +94,8 @@ export function devServerSection({ styleGlob, scriptGlob, markupGlob, imageGlob 
     server: {
       baseDir: './dist'
     },
-    open: true
+    open: openBrowser,
+    notify: false
   });
   cb();
 }

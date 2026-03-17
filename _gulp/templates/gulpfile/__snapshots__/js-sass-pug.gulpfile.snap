@@ -15,9 +15,9 @@ const plumber = require('gulp-plumber');
 const sourcemaps = require('gulp-sourcemaps');
 const gulpif = require('gulp-if');
 const pug = require('gulp-pug');
-const tsify = null;
-
 const production = process.env.NODE_ENV === 'production';
+const openBrowser = process.env.BROWSERSYNC_OPEN === 'true';
+const skipImageOptimization = process.env.SKIP_IMAGE_OPTIMIZATION === 'true';
 
 async function clean() {
   await del(['dist']);
@@ -67,7 +67,7 @@ function markup() {
 
 function images() {
   return src('src/img/**/*')
-    .pipe(imagemin())
+    .pipe(gulpif(!skipImageOptimization, imagemin()))
     .pipe(dest('dist/img'));
 }
 
@@ -76,7 +76,8 @@ function serve(cb) {
     server: {
       baseDir: './dist'
     },
-    open: true
+    open: openBrowser,
+    notify: false
   });
   cb();
 }

@@ -7,6 +7,7 @@ import {
   copyFile,
   createDirectory,
   deleteDirectory,
+  deleteProjectDirectory,
   fileExists,
   writeFile,
 } from './fileSystem';
@@ -44,6 +45,20 @@ test('copyFile copies source content into destination path', () => {
   copyFile(sourceFile, destFile);
 
   assert.equal(fs.readFileSync(destFile, 'utf8'), content);
+
+  deleteDirectory(tmpRoot);
+});
+
+test('deleteProjectDirectory only allows src/dist under the provided root', () => {
+  const tmpRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'wlk-safe-delete-'));
+  const srcDir = path.join(tmpRoot, 'src');
+  createDirectory(srcDir);
+
+  deleteProjectDirectory('src', tmpRoot);
+  assert.equal(fileExists(srcDir), false);
+
+  assert.throws(() => deleteProjectDirectory('node_modules', tmpRoot), /Unsafe delete target/);
+  assert.throws(() => deleteProjectDirectory('../src', tmpRoot), /Unsafe delete target/);
 
   deleteDirectory(tmpRoot);
 });

@@ -64,6 +64,18 @@ npm run typecheck
 npm test
 ```
 
+Environment toggles (optional):
+
+```bash
+# keep BrowserSync from opening a browser
+BROWSERSYNC_OPEN=false
+
+# skip image optimization for faster local loops
+SKIP_IMAGE_OPTIMIZATION=true
+```
+
+See `.env.example` for supported toggles.
+
 ## Project structure
 
 ```text
@@ -151,6 +163,7 @@ If your goal is to make this starter more production-realistic for learners, imp
    - Add one-click workflows for GitHub Pages / Netlify / Vercel static output.
 2. **Release automation**
    - Semantic versioning + changelog generation.
+   - Track with Changesets config (`.changeset/config.json`).
 3. **Performance checks**
    - Add Lighthouse CI or static asset budget checks.
 
