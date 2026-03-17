@@ -1,7 +1,7 @@
 {
-  "name": "web-boilerplate-starter-kit",
+  "name": "web-learning-kit-generator",
   "version": "4.0.0",
-  "description": "A Front-end web kit and boilerplate for building web apps or small sites",
+  "description": "A learning-focused front-end project generator with a realistic Gulp workflow",
   "main": "gulpfile.js",
   "type": "commonjs",
   "scripts": {
