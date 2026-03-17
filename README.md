@@ -35,7 +35,9 @@ This generator creates a beginner-friendly starting point while still exposing r
 ## Requirements
 
 - Node.js 18+ (Node.js 20 recommended)
-- npm (or Yarn)
+- npm (recommended)
+
+The repository also declares supported runtime versions in `package.json` under `engines`.
 
 ## Quick start
 
@@ -62,6 +64,7 @@ Quality checks:
 ```bash
 npm run typecheck
 npm test
+npm run lint
 ```
 
 Environment toggles (optional):

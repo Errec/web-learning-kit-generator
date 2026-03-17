@@ -1,40 +1,8 @@
 node_modules/
-yarn-error.log
-yarn.lock
-package-lock.json
-npm-debug.log
-
-.DS_Store
+dist/
+src/
+coverage/
+.nyc_output/
+*.log
 .env
-.env.local
-.env.development.local
-.env.test.local
-.env.production.local
-.pnp
-.pnp.js
-.pnp.cjs
-*.pnp.js
-*.pnp.cjs
-.cache/
-
-build/
-temp/
-*.gitignore
-.vscode
-
-# cache files for sublime text
-*.tmlanguage.cache
-*.tmPreferences.cache
-*.stTheme.cache
-
-# sftp configuration file
-sftp-config.json
-
-# Package control specific files
-Package Control.last-run
-Package Control.ca-list
-Package Control.ca-bundle
-Package Control.system-ca-bundle
-Package Control.cache/
-Package Control.ca-certs/
-bh_unicode_properties.cache
+.DS_Store
