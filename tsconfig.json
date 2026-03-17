@@ -28,8 +28,7 @@
     "paths": {
       "*": [
         "node_modules/*",
-        "_gulp/types/*",
-        "./typings"
+        "_gulp/types/*"
       ]
     },
     "esModuleInterop": true,
@@ -46,8 +45,7 @@
     ],
     "typeRoots": [
       "node_modules/@types",
-      "_gulp/types",
-      "./typings"
+      "_gulp/types"
     ]
   },
   "include": [
