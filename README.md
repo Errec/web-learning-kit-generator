@@ -81,6 +81,7 @@ This repository now includes:
 - Unit tests for filesystem utilities (`npm test`)
 - CI workflow for typecheck + tests (GitHub Actions)
 - Contributing and security documentation
+- A single runtime architecture: setup always generates one `gulpfile.js` from user choices (no parallel dynamic task runtime)
 
 ---
 
