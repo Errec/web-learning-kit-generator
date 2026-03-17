@@ -21,6 +21,7 @@ const markupAliases: Record<string, UserChoices['markup']> = {
 export interface ParsedSetupOptions {
   choices?: UserChoices;
   shouldPrompt: boolean;
+  autoConfirm: boolean;
 }
 
 function readFlagValue(argv: string[], flagName: string): string | undefined {
@@ -51,10 +52,14 @@ export function parseSetupOptions(argv: string[]): ParsedSetupOptions {
   const rawScript = normalizeFlagValue(readFlagValue(argv, '--script'));
   const rawStyle = normalizeFlagValue(readFlagValue(argv, '--style'));
   const rawMarkup = normalizeFlagValue(readFlagValue(argv, '--markup'));
+  const autoConfirm = argv.includes('--yes') || argv.includes('-y');
 
   const hasChoiceFlag = rawScript !== undefined || rawStyle !== undefined || rawMarkup !== undefined;
   if (!hasChoiceFlag) {
-    return { shouldPrompt: true };
+    return {
+      shouldPrompt: true,
+      autoConfirm,
+    };
   }
 
   if (!rawScript || !rawStyle || !rawMarkup) {
@@ -73,5 +78,6 @@ export function parseSetupOptions(argv: string[]): ParsedSetupOptions {
   return {
     choices,
     shouldPrompt: false,
+    autoConfirm,
   };
 }

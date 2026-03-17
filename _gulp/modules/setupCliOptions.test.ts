@@ -5,6 +5,7 @@ import { parseSetupOptions } from './setupCliOptions';
 test('parseSetupOptions returns interactive mode when no flags are provided', () => {
   const parsed = parseSetupOptions([]);
   assert.equal(parsed.shouldPrompt, true);
+  assert.equal(parsed.autoConfirm, false);
   assert.equal(parsed.choices, undefined);
 });
 
@@ -12,6 +13,7 @@ test('parseSetupOptions parses non-interactive flags with aliases and booleans',
   const parsed = parseSetupOptions(['--script', 'ts', '--style=scss', '--markup', 'pug', '--normalize']);
 
   assert.equal(parsed.shouldPrompt, false);
+  assert.equal(parsed.autoConfirm, false);
   assert.deepEqual(parsed.choices, {
     script: 'TypeScript',
     style: 'SCSS',
@@ -19,6 +21,14 @@ test('parseSetupOptions parses non-interactive flags with aliases and booleans',
     addNormalize: true,
     addReset: false,
   });
+});
+
+test('parseSetupOptions sets autoConfirm when --yes or -y is provided', () => {
+  const longFlag = parseSetupOptions(['--yes']);
+  const shortFlag = parseSetupOptions(['-y']);
+
+  assert.equal(longFlag.autoConfirm, true);
+  assert.equal(shortFlag.autoConfirm, true);
 });
 
 test('parseSetupOptions throws when non-interactive flags are partially provided', () => {

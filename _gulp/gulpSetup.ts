@@ -11,9 +11,11 @@ import { logger } from './utils/logger';
 
 async function setup(): Promise<void> {
   try {
+    const parsedOptions = parseSetupOptions(process.argv.slice(2));
+
     const projectExists = fileExists('src') || fileExists('dist');
     if (projectExists) {
-      const shouldDelete = await confirmProjectDeletion();
+      const shouldDelete = parsedOptions.autoConfirm ? true : await confirmProjectDeletion();
       if (!shouldDelete) {
         logger.info('Project setup canceled. Exiting...');
         return;
@@ -22,10 +24,9 @@ async function setup(): Promise<void> {
       deleteDirectory('dist');
     }
 
-    const parsedOptions = parseSetupOptions(process.argv.slice(2));
     const rawChoices = parsedOptions.shouldPrompt ? await promptUser() : parsedOptions.choices;
     const choices: UserChoices = assertUserChoices(rawChoices);
-    
+
     await writeFile('_gulp/user-choices.json', JSON.stringify(choices, null, 2));
 
     createProjectStructure(choices);
