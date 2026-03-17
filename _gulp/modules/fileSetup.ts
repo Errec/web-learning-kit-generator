@@ -1,12 +1,15 @@
+import { resolveProjectPaths } from './pathConfig';
 import { UserChoices } from '../types';
 import { copyFile, createDirectory, writeFile } from '../utils/fileSystem';
 
 export function createProjectStructure(choices: UserChoices): void {
+  const paths = resolveProjectPaths(choices);
+
   const dirs = [
     'src',
-    `src/${choices.script === 'JavaScript' ? 'js' : 'ts'}`,
-    `src/${choices.style === 'Sass' ? 'sass/base' : 'scss/base'}`,  // Updated path for base
-    `src/${choices.markup === 'HTML' ? 'html' : 'pug'}`,
+    `src/${paths.scriptFolder}`,
+    `src/${paths.styleBaseFolder}`,
+    `src/${paths.markupFolder}`,
     'src/img',
     'dist/css'
   ];
@@ -15,35 +18,34 @@ export function createProjectStructure(choices: UserChoices): void {
 }
 
 export function createProjectFiles(choices: UserChoices): void {
-  const scriptExt = choices.script === 'JavaScript' ? 'js' : 'ts';
-  const styleExt = choices.style === 'Sass' ? 'sass' : 'scss';
+  const paths = resolveProjectPaths(choices);
 
   const scriptContent = choices.script === 'JavaScript'
     ? 'console.log("Hello, World!");'
     : 'console.log("Hello, TypeScript!");';
-  writeFile(`src/${scriptExt}/main.${scriptExt}`, scriptContent);
+  writeFile(`src/${paths.scriptFolder}/main.${paths.scriptExtension}`, scriptContent);
 
   let styleContent = `// Main ${choices.style} file\n`;
   if (choices.addNormalize) styleContent += choices.style === 'Sass' ? "@import 'base/normalize'\n" : "@import 'base/normalize';\n";
   if (choices.addReset) styleContent += choices.style === 'Sass' ? "@import 'base/reset'\n" : "@import 'base/reset';\n";
-  writeFile(`src/${styleExt}/main.${styleExt}`, styleContent);
+  writeFile(`src/${paths.styleFolder}/main.${paths.styleExtension}`, styleContent);
 
   const markupContent = choices.markup === 'HTML' ? getHtmlTemplate() : getPugTemplate();
-  const markupFilePath = choices.markup === 'HTML' ? 'src/html/index.html' : 'src/pug/index.pug';
-
-  writeFile(markupFilePath, markupContent);
+  writeFile(`src/${paths.markupFolder}/index.${paths.markupExtension}`, markupContent);
   writeFile('src/favicon.ico', '');
 }
 
 export function copyVendorCSS(choices: UserChoices): void {
+  const paths = resolveProjectPaths(choices);
+
   const vendorFiles = [
-    { type: 'Normalize', src: `_gulp/vendors/normalize.${choices.style === 'Sass' ? 'sass' : 'scss'}` },
-    { type: 'Reset', src: `_gulp/vendors/reset.${choices.style === 'Sass' ? 'sass' : 'scss'}` }
+    { type: 'Normalize', src: `_gulp/vendors/normalize.${paths.styleExtension}` },
+    { type: 'Reset', src: `_gulp/vendors/reset.${paths.styleExtension}` }
   ];
 
   vendorFiles.forEach(file => {
     if (choices[`add${file.type}` as keyof UserChoices]) {
-      const dest = `src/${choices.style === 'Sass' ? 'sass/base' : 'scss/base'}/_${file.type.toLowerCase()}.${choices.style === 'Sass' ? 'sass' : 'scss'}`;  // Save in base folder
+      const dest = `src/${paths.styleBaseFolder}/_${file.type.toLowerCase()}.${paths.styleExtension}`;
       copyFile(file.src, dest);
     }
   });
