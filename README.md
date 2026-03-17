@@ -51,6 +51,12 @@ Build for production:
 npm run build
 ```
 
+Non-interactive setup (for automation):
+
+```bash
+npm run init -- --script ts --style scss --markup pug --normalize --reset --yes
+```
+
 Quality checks:
 
 ```bash
@@ -73,6 +79,10 @@ npm test
 └── README.md
 ```
 
+## Generated output examples
+
+See concrete scaffold output trees here: [Generated output examples](./docs/generated-output-examples.md).
+
 ## Current quality/devops baseline
 
 This repository now includes:
@@ -81,10 +91,27 @@ This repository now includes:
 - Unit tests for filesystem utilities (`npm test`)
 - CI workflow for typecheck + tests (GitHub Actions)
 - Contributing and security documentation
+- A single runtime architecture: setup always generates one `gulpfile.js` from user choices (no parallel dynamic task runtime)
+
+## Architecture decision
+
+This project intentionally uses **one runtime path**:
+
+1. collect user choices (interactive prompts or CLI flags)
+2. scaffold source files
+3. generate a single `gulpfile.js`
+4. run gulp commands through npm scripts
+
+See ADRs for rationale and trade-offs:
+- [ADR 0001: single generated-gulpfile runtime](./docs/adr/0001-generated-gulpfile-runtime.md)
+- [ADR 0002: template composition](./docs/adr/0002-template-composition.md)
 
 ---
 
 ## Deep improvement roadmap
+
+Track roadmap execution with milestones/labels using this guide: [Roadmap tracking](./docs/roadmap-tracking.md).
+
 
 If your goal is to make this starter more production-realistic for learners, implement the following in phases.
 
@@ -146,6 +173,10 @@ If your goal is to make this starter more production-realistic for learners, imp
 
 - [Contributing guide](./CONTRIBUTING.md)
 - [Security policy](./SECURITY.md)
+- [Troubleshooting](./docs/troubleshooting.md)
+- [Generated output examples](./docs/generated-output-examples.md)
+- [Roadmap tracking guide](./docs/roadmap-tracking.md)
+- [Architecture Decision Records](./docs/adr)
 
 ## Inspiration
 
