@@ -24,3 +24,29 @@ export function deleteDirectory(dir: string): void {
     fs.rmSync(dir, { recursive: true, force: true });
   }
 }
+
+function assertSafeProjectDeletePath(dir: string, cwd: string): string {
+  const allowedDirs = new Set(['src', 'dist']);
+  const resolvedCwd = path.resolve(cwd);
+  const resolvedTarget = path.resolve(cwd, dir);
+  const targetBasename = path.basename(resolvedTarget);
+
+  if (!allowedDirs.has(targetBasename)) {
+    throw new Error(`Unsafe delete target: ${dir}. Only src/dist can be deleted.`);
+  }
+
+  const relative = path.relative(resolvedCwd, resolvedTarget);
+  const escapesProjectRoot = relative.startsWith('..') || path.isAbsolute(relative);
+  if (escapesProjectRoot) {
+    throw new Error(`Unsafe delete target outside project root: ${dir}`);
+  }
+
+  return resolvedTarget;
+}
+
+export function deleteProjectDirectory(dir: string, cwd: string = process.cwd()): void {
+  const safeTarget = assertSafeProjectDeletePath(dir, cwd);
+  if (fs.existsSync(safeTarget)) {
+    fs.rmSync(safeTarget, { recursive: true, force: true });
+  }
+}
