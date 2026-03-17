@@ -69,10 +69,11 @@ export function scriptsSection({ choices, scriptFolder, scriptExtension }: GulpT
 }
 
 export function markupSection({ choices, markupFolder, markupExtension }: GulpTemplateContext): string {
+  const compileMarkupPipe = choices.markup === 'Pug' ? '\n    .pipe(pug())' : '';
+
   return `function markup() {
   return src('src/${markupFolder}/**/*.${markupExtension}')
-    .pipe(plumber())
-    ${choices.markup === 'Pug' ? '.pipe(pug())' : ''}
+    .pipe(plumber())${compileMarkupPipe}
     .pipe(dest('dist'));
 }`;
 }
