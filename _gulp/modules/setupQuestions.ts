@@ -1,10 +1,11 @@
 import inquirer from 'inquirer';
 import { UserChoices } from '../types';
+import { markupChoices, scriptChoices, styleChoices } from './userChoicesValidation';
 
 export const questions = [
-  { type: 'list', name: 'script', message: 'Choose JavaScript or TypeScript:', choices: ['JavaScript', 'TypeScript'] },
-  { type: 'list', name: 'style', message: 'Choose Sass or SCSS:', choices: ['Sass', 'SCSS'] },
-  { type: 'list', name: 'markup', message: 'Choose HTML or Pug:', choices: ['HTML', 'Pug'] },
+  { type: 'list', name: 'script', message: 'Choose JavaScript or TypeScript:', choices: [...scriptChoices] },
+  { type: 'list', name: 'style', message: 'Choose Sass or SCSS:', choices: [...styleChoices] },
+  { type: 'list', name: 'markup', message: 'Choose HTML or Pug:', choices: [...markupChoices] },
   { type: 'confirm', name: 'addNormalize', message: 'Add normalize.css?', default: false },
   { type: 'confirm', name: 'addReset', message: 'Add reset.css?', default: false }
 ];
