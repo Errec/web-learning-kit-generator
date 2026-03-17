@@ -32,7 +32,7 @@ async function setup(): Promise<void> {
     logger.success('Setup complete. Gulpfile has been generated.');
     logger.info('Starting development server...');
 
-    exec('yarn start', (error, stdout, stderr) => {
+    exec('npm start', (error, stdout, stderr) => {
       if (error) {
         logger.error(`Error: ${error.message}`);
         return;
