@@ -5,9 +5,11 @@
   "main": "gulpfile.js",
   "type": "commonjs",
   "scripts": {
-    "postinstall": "ts-node _gulp/gulpSetup.ts",
+    "init": "ts-node _gulp/gulpSetup.ts",
     "start": "NODE_OPTIONS=--no-deprecation gulp",
-    "build": "NODE_OPTIONS=--no-deprecation gulp build"
+    "build": "NODE_OPTIONS=--no-deprecation gulp build",
+    "typecheck": "tsc --noEmit",
+    "test": "node --test -r ts-node/register _gulp/**/*.test.ts"
   },
   "author": "Raniro Coelho",
   "license": "MIT",
